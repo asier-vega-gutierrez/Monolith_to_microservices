@@ -1,0 +1,8 @@
+MaquinasVirtuales/DB/Repositorios/storage/
+Microservicios/DB/Repositorios/storage/
+Microservicios/logs/
+Monolitico/DB/Repositorios/storage/
+Microservicios/docker-kafka/kafka-storage/
+
+__pycache__/
+MaquinasVirtuales/IaC/terraform/.terraform/

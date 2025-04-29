@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package relay;
+
+// gRPC service (RelayService)
+service RelayService {
+    // Publish RPC - takes a PublishRequest with a topic and value field
+    rpc Publish (PublishRequest) returns (PublishConfirmed) {}
+
+    // Subscribe RPC takes a SubscribeRequest and returns a stream 
+    // of Message objects
+    rpc Subscribe(SubscribeRequest) returns (stream Message) {}
+}
+
+// Relay Message class that 
+// contains a single value field
+message Message {
+    string topic = 1; 
+    string value = 2;
+}
+
+// Request for the Publish RPC, includes topic and value
+message PublishRequest {
+    string topic = 1;
+    string value = 2;
+}
+
+// Response for the Publish RPC
+message PublishConfirmed {
+}
+
+// Message that requests a subscription to Relay Messages, includes topics
+message SubscribeRequest {
+    string topic = 1;
+    //repeated string topic = 1;
+}

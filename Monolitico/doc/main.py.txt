@@ -1,0 +1,984 @@
+<domain.Pouring.PouringDataRecData object at 0x000002898F6D63E0>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into sensor table.
+Disconnected from the database.(Postgress)
+SENSORS OBSERVER AT DIGITAL TWIN: message received.
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.3972078561782837,
+   "line": 2,
+   "mould_temp": 110.13455200195312,
+   "temperature_output": 67.10540771484375,
+   "timestamp": "2023-10-28 09:18:50.034304+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6D5660>
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into pouring data rec table.
+Disconnected from the database.(Postgress)
+Notify mould data - Line = 2 Ref = 9692
+MOULD DATA OBSERVER: message received for line 2
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "2",
+   "cod_maquina": "150151",
+   "cod_operario": null,
+   "compressibility": 27.0,
+   "core_status": 0,
+   "cycle_time": 8.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:32:08.407000",
+   "fecha_insercion_reg": "2022-10-03 08:57:01.733000",
+   "id_molde": 19325825,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194035,
+   "indice_calidad_dato": 10,
+   "mould_counter": 1311142,
+   "mould_index": 16681509,
+   "mould_status": 0,
+   "mould_thickness": 280.70001220703125,
+   "pour_status": 1,
+   "reference": 9692,
+   "setting_index": 72545,
+   "time_pour": "2022-10-03 08:59:56",
+   "time_prod": "2022-10-03 08:57:31.540000",
+   "time_shake_out": "2022-10-03 09:32:43.390000"
+}
+<domain.Mould.MouldData object at 0x000002898F6D43A0>
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into mould table.
+Disconnected from the database.(Postgress)
+MOULD OBSERVER AT DIGITAL TWIN: message received.
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "2",
+   "cod_maquina": "150151",
+   "cod_operario": null,
+   "compressibility": 27.0,
+   "core_status": 0,
+   "cycle_time": 8.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:32:08.407000",
+   "fecha_insercion_reg": "2022-10-03 08:57:01.733000",
+   "id_molde": 19325825,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194035,
+   "indice_calidad_dato": 10,
+   "mould_counter": 1311142,
+   "mould_index": 16681509,
+   "mould_status": 0,
+   "mould_thickness": 280.70001220703125,
+   "pour_status": 1,
+   "reference": 9692,
+   "setting_index": 72545,
+   "time_pour": "2022-10-03 08:59:56",
+   "time_prod": "2022-10-03 08:57:31.540000",
+   "time_shake_out": "2022-10-03 09:32:43.390000"
+}
+<domain.Mould.MouldData object at 0x000002898F6D6A40>
+MOULD OBSERVER AT DIGITAL TWIN: message received.
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "2",
+   "cod_maquina": "150151",
+   "cod_operario": null,
+   "compressibility": 27.299999237060547,
+   "core_status": 0,
+   "cycle_time": 8.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:28:10.590000",
+   "fecha_insercion_reg": "2022-10-03 08:53:01.170000",
+   "id_molde": 19325769,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194035,
+   "indice_calidad_dato": 10,
+   "mould_counter": 1311112,
+   "mould_index": 16681479,
+   "mould_status": 0,
+   "mould_thickness": 280.29998779296875,
+   "pour_status": 1,
+   "reference": 9692,
+   "setting_index": 72545,
+   "time_pour": "2022-10-03 08:55:58",
+   "time_prod": "2022-10-03 08:53:33.037000",
+   "time_shake_out": "2022-10-03 09:28:44.177000"
+}
+<domain.Mould.MouldData object at 0x000002898F6D6B30>
+COOLING DRUM Belts Addition: 1
+PREDICTION OBSERVER (Temporal Series): message received for belts.
+{
+   "data_for_prediction": {
+      "humidity": 1.3972078561782837,
+      "mould_size": 30,
+      "moulds_to_calculate": 15,
+      "q_sand_avg": 3.3085714285714283,
+      "temp_avg": 57.0
+   },
+   "datetime": "2023-10-28 09:18:53.142092+00:00",
+   "line": 1,
+   "prediction": 0.20400230920163265,
+   "type": "TAPES"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6D6D40>
+Connected to the database.(InfluxDB)
+PREDICTION POINT to write: [{'measurement': 'water_addition', 'tags': {'line': 999, 'type': 'TAPES'}, 'time': '2023-10-28 09:18:53.142092+00:00', 'fields': {'prediction': 0.20400230920163265, 'temp_avg': 57.0, 'q_sand_avg': 3.3085714285714283, 'mould_size': 30, 'moulds_to_calculate': 15, 'humidity': 1.3972078561782837}}]
+Disconnected from the database.(InfluxDB)
+PREDICTION OBSERVER: message received for belts.
+{
+   "data_for_prediction": {
+      "humidity": 1.3972078561782837,
+      "mould_size": 30,
+      "moulds_to_calculate": 15,
+      "q_sand_avg": 3.3085714285714283,
+      "temp_avg": 57.0
+   },
+   "datetime": "2023-10-28 09:18:53.142092+00:00",
+   "line": 1,
+   "prediction": 0.20400230920163265,
+   "type": "TAPES"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6D6D40>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into chemical composition table.
+Disconnected from the database.(Postgress)
+COOLING DRUM Water Addition for Line 2: 35.99520483202878
+PREDICTION OBSERVER (Temporal Series): message received for line 2
+{
+   "data_for_prediction": {
+      "f_avg": 1,
+      "mould_size": 30,
+      "moulds_to_calculate": 10,
+      "q_metal_avg": 3.1714285714285713,
+      "q_sand_avg": 22.10784437918527
+   },
+   "datetime": "2023-10-28 09:18:53.182495+00:00",
+   "line": 2,
+   "prediction": 35.99520483202878,
+   "type": "DRUM"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6D6AD0>
+Connected to the database.(InfluxDB)
+PREDICTION POINT to write: [{'measurement': 'water_addition', 'tags': {'line': 2, 'type': 'DRUM'}, 'time': '2023-10-28 09:18:53.182495+00:00', 'fields': {'prediction': 35.99520483202878, 'f_avg': 1.0, 'mould_size': 30, 'moulds_to_calculate': 10, 'q_metal_avg': 3.1714285714285713, 'q_sand_avg': 22.10784437918527}}]
+Disconnected from the database.(InfluxDB)
+PREDICTION OBSERVER: message received for line 2
+{
+   "data_for_prediction": {
+      "f_avg": 1,
+      "mould_size": 30,
+      "moulds_to_calculate": 10,
+      "q_metal_avg": 3.1714285714285713,
+      "q_sand_avg": 22.10784437918527
+   },
+   "datetime": "2023-10-28 09:18:53.182495+00:00",
+   "line": 2,
+   "prediction": 35.99520483202878,
+   "type": "DRUM"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6D6AD0>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into chemical composition table.
+Disconnected from the database.(Postgress)
+Notify mould data - Line = 1 Ref = 6552
+MOULD DATA OBSERVER: message received for line 1
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "1",
+   "cod_maquina": "2568",
+   "cod_operario": null,
+   "compressibility": 27.100000381469727,
+   "core_status": 0,
+   "cycle_time": 9.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:32:12.970000",
+   "fecha_insercion_reg": "2022-10-03 08:58:05.737000",
+   "id_molde": 19325840,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194032,
+   "indice_calidad_dato": 10,
+   "mould_counter": 2777107,
+   "mould_index": 9636043,
+   "mould_status": 0,
+   "mould_thickness": 241.1999969482422,
+   "pour_status": 1,
+   "reference": 6552,
+   "setting_index": 103205,
+   "time_pour": "2022-10-03 09:07:55",
+   "time_prod": "2022-10-03 09:05:05.447000",
+   "time_shake_out": "2022-10-03 09:39:17.083000"
+}
+<domain.Mould.MouldData object at 0x000002898F6D7610>
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into mould table.
+Disconnected from the database.(Postgress)
+MOULD OBSERVER AT DIGITAL TWIN: message received.
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "1",
+   "cod_maquina": "2568",
+   "cod_operario": null,
+   "compressibility": 27.100000381469727,
+   "core_status": 0,
+   "cycle_time": 9.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:32:12.970000",
+   "fecha_insercion_reg": "2022-10-03 08:58:05.737000",
+   "id_molde": 19325840,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194032,
+   "indice_calidad_dato": 10,
+   "mould_counter": 2777107,
+   "mould_index": 9636043,
+   "mould_status": 0,
+   "mould_thickness": 241.1999969482422,
+   "pour_status": 1,
+   "reference": 6552,
+   "setting_index": 103205,
+   "time_pour": "2022-10-03 09:07:55",
+   "time_prod": "2022-10-03 09:05:05.447000",
+   "time_shake_out": "2022-10-03 09:39:17.083000"
+}
+<domain.Mould.MouldData object at 0x000002898F6D6650>
+MOULD OBSERVER AT DIGITAL TWIN: message received.
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "1",
+   "cod_maquina": "2568",
+   "cod_operario": null,
+   "compressibility": 27.100000381469727,
+   "core_status": 0,
+   "cycle_time": 9.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:29:06.437000",
+   "fecha_insercion_reg": "2022-10-03 08:55:00.070000",
+   "id_molde": 19325796,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194032,
+   "indice_calidad_dato": 10,
+   "mould_counter": 2777087,
+   "mould_index": 9636023,
+   "mould_status": 0,
+   "mould_thickness": 243.8000030517578,
+   "pour_status": 1,
+   "reference": 6552,
+   "setting_index": 103205,
+   "time_pour": "2022-10-03 09:04:49",
+   "time_prod": "2022-10-03 09:01:59.710000",
+   "time_shake_out": "2022-10-03 09:36:10.717000"
+}
+<domain.Mould.MouldData object at 0x000002898F6D4DF0>
+COOLING DRUM Belts Addition: 1
+PREDICTION OBSERVER (Temporal Series): message received for belts.
+{
+   "data_for_prediction": {
+      "humidity": 1.3972078561782837,
+      "mould_size": 30,
+      "moulds_to_calculate": 15,
+      "q_sand_avg": 3.2914285714285714,
+      "temp_avg": 57.0
+   },
+   "datetime": "2023-10-28 09:18:53.806031+00:00",
+   "line": 1,
+   "prediction": 0.20399469468734693,
+   "type": "TAPES"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6D6E00>
+Connected to the database.(InfluxDB)
+PREDICTION POINT to write: [{'measurement': 'water_addition', 'tags': {'line': 999, 'type': 'TAPES'}, 'time': '2023-10-28 09:18:53.806031+00:00', 'fields': {'prediction': 0.20399469468734693, 'temp_avg': 57.0, 'q_sand_avg': 3.2914285714285714, 'mould_size': 30, 'moulds_to_calculate': 15, 'humidity': 1.3972078561782837}}]
+Disconnected from the database.(InfluxDB)
+PREDICTION OBSERVER: message received for belts.
+{
+   "data_for_prediction": {
+      "humidity": 1.3972078561782837,
+      "mould_size": 30,
+      "moulds_to_calculate": 15,
+      "q_sand_avg": 3.2914285714285714,
+      "temp_avg": 57.0
+   },
+   "datetime": "2023-10-28 09:18:53.806031+00:00",
+   "line": 1,
+   "prediction": 0.20399469468734693,
+   "type": "TAPES"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F697A30>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into chemical composition table.
+Disconnected from the database.(Postgress)
+COOLING DRUM Water Addition for Line 1: 38.647210115285134
+PREDICTION OBSERVER (Temporal Series): message received for line 1
+{
+   "data_for_prediction": {
+      "f_avg": 1,
+      "mould_size": 20,
+      "moulds_to_calculate": 7,
+      "q_metal_avg": 3.4285714285714284,
+      "q_sand_avg": 19.236879897012518
+   },
+   "datetime": "2023-10-28 09:18:53.852231+00:00",
+   "line": 1,
+   "prediction": 38.647210115285134,
+   "type": "DRUM"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6B9E10>
+Connected to the database.(InfluxDB)
+PREDICTION POINT to write: [{'measurement': 'water_addition', 'tags': {'line': 1, 'type': 'DRUM'}, 'time': '2023-10-28 09:18:53.852231+00:00', 'fields': {'prediction': 38.647210115285134, 'f_avg': 1.0, 'mould_size': 20, 'moulds_to_calculate': 7, 'q_metal_avg': 3.4285714285714284, 'q_sand_avg': 19.236879897012518}}]
+Disconnected from the database.(InfluxDB)
+PREDICTION OBSERVER: message received for line 1
+{
+   "data_for_prediction": {
+      "f_avg": 1,
+      "mould_size": 20,
+      "moulds_to_calculate": 7,
+      "q_metal_avg": 3.4285714285714284,
+      "q_sand_avg": 19.236879897012518
+   },
+   "datetime": "2023-10-28 09:18:53.852231+00:00",
+   "line": 1,
+   "prediction": 38.647210115285134,
+   "type": "DRUM"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6B9E10>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into chemical composition table.
+Disconnected from the database.(Postgress)
+Notify sensor L1 - Timestamp = 2023-10-28 09:18:57.147133+00:00
+SENSORS OBSERVER (Temporal Series): message received for line 1
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.4435040950775146,
+   "line": 1,
+   "mould_temp": 222.3754425048828,
+   "temperature_output": 57.0,
+   "timestamp": "2023-10-28 09:18:57.147133+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6BB820>
+Connected to the database.(InfluxDB)
+SENSOR POINT to write: [{'measurement': 'foundry_sensors', 'tags': {'line': 1}, 'time': '2023-10-28 09:18:57.147133+00:00', 'fields': {'bypass_activated': 0, 'cooling_drum_running': 1, 'temperature_output': 57.0, 'mould_temp': 222.3754425048828, 'ambient_temperature': 24.5, 'humidity': 1.4435040950775146}}]
+Disconnected from the database.(InfluxDB)
+SENSORS OBSERVER: message received for line 1
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.4435040950775146,
+   "line": 1,
+   "mould_temp": 222.3754425048828,
+   "temperature_output": 57.0,
+   "timestamp": "2023-10-28 09:18:57.147133+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6BB820>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into sensor table.
+Disconnected from the database.(Postgress)
+SENSORS OBSERVER AT DIGITAL TWIN: message received.
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.4435040950775146,
+   "line": 1,
+   "mould_temp": 222.3754425048828,
+   "temperature_output": 57.0,
+   "timestamp": "2023-10-28 09:18:57.147133+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6BB820>
+SENSORS OBSERVER AT DIGITAL TWIN: message received.
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.4435040950775146,
+   "line": 1,
+   "mould_temp": 222.3754425048828,
+   "temperature_output": 57.0,
+   "timestamp": "2023-10-28 09:18:57.147133+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6BA920>
+Notify sensor L2 - Timestamp = 2023-10-28 09:18:57.147133+00:00
+SENSORS OBSERVER (Temporal Series): message received for line 2
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.4435040950775146,
+   "line": 2,
+   "mould_temp": 103.29861450195312,
+   "temperature_output": 66.97952270507812,
+   "timestamp": "2023-10-28 09:18:57.147133+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6B9C30>
+Connected to the database.(InfluxDB)
+SENSOR POINT to write: [{'measurement': 'foundry_sensors', 'tags': {'line': 2}, 'time': '2023-10-28 09:18:57.147133+00:00', 'fields': {'bypass_activated': 0, 'cooling_drum_running': 1, 'temperature_output': 66.97952270507812, 'mould_temp': 103.29861450195312, 'ambient_temperature': 24.5, 'humidity': 1.4435040950775146}}]
+Disconnected from the database.(InfluxDB)
+SENSORS OBSERVER: message received for line 2
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.4435040950775146,
+   "line": 2,
+   "mould_temp": 103.29861450195312,
+   "temperature_output": 66.97952270507812,
+   "timestamp": "2023-10-28 09:18:57.147133+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6B9C30>
+Connected to the database.(MySql)
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into sensor table.
+Disconnected from the database.(Postgress)
+SENSORS OBSERVER AT DIGITAL TWIN: message received.
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.4435040950775146,
+   "line": 2,
+   "mould_temp": 103.29861450195312,
+   "temperature_output": 66.97952270507812,
+   "timestamp": "2023-10-28 09:18:57.147133+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6B9C30>
+Disconnected from the database. (MySql)
+Notify data rec - Pouring Mould = 1016
+POURING OBSERVER: message received for pouring.
+{
+   "aperture_max": 16.0,
+   "aperture_min": 13.0,
+   "archive_model_data": {
+      "aperture_max": 0.0,
+      "aperture_min": 0.0,
+      "duration_final_control": 0.0,
+      "during_level": 0.0,
+      "final_level": 0.0,
+      "id": 6206,
+      "inoculation_gs": 9.642858,
+      "inoculation_perc": 0.15,
+      "inoculation_start": 0.0,
+      "inoculation_stop": 0.0,
+      "material_type": 0,
+      "model_code": "4246009",
+      "model_description": "TUBE ECHAPPEMENT",
+      "model_weight": 50.0,
+      "position_axe_x": 0.0,
+      "position_axe_y": 0.0,
+      "pouring_duration": 6.0,
+      "temperature_max": 1400.0,
+      "temperature_min": 1370.0
+   },
+   "elettrodo_level": 1,
+   "gr_inoculant": 80.0,
+   "gs_inoculant": 12.5,
+   "inoculant_type": 0,
+   "inoculant_type_string": "MAT.A",
+   "level_final": 62,
+   "local": "2018-03-07 07:20:46",
+   "m_sec": 831,
+   "model_code": "4246009",
+   "model_description": "TUBE ECHAPPEMENT",
+   "model_weight": 50.0,
+   "nr_medaglia": 50,
+   "nr_pouring_mould": 1016,
+   "pouring_duration": 6.4,
+   "pouring_fault": 0,
+   "pouring_mode": "CAMERA",
+   "pression": "AUTO",
+   "reason": "Variabile Registrazione",
+   "staffa_scarta": 0,
+   "temperatura_manuale": 1370,
+   "temperature": 1342,
+   "ticket_id": "180307070242",
+   "time": "2023-10-28 11:18:57.208478",
+   "user": null,
+   "weight": 1128
+}
+<domain.Pouring.PouringDataRecData object at 0x000002898F6B83D0>
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into pouring data rec table.
+Disconnected from the database.(Postgress)
+Notify mould data - Line = 2 Ref = 9692
+MOULD DATA OBSERVER: message received for line 2
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "2",
+   "cod_maquina": "150151",
+   "cod_operario": null,
+   "compressibility": 27.200000762939453,
+   "core_status": 0,
+   "cycle_time": 8.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:32:15.153000",
+   "fecha_insercion_reg": "2022-10-03 08:57:08.233000",
+   "id_molde": 19325827,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194035,
+   "indice_calidad_dato": 10,
+   "mould_counter": 1311143,
+   "mould_index": 16681510,
+   "mould_status": 0,
+   "mould_thickness": 280.1000061035156,
+   "pour_status": 1,
+   "reference": 9692,
+   "setting_index": 72545,
+   "time_pour": "2022-10-03 09:00:04",
+   "time_prod": "2022-10-03 08:57:39.547000",
+   "time_shake_out": "2022-10-03 09:32:51.273000"
+}
+<domain.Mould.MouldData object at 0x000002898F6B8FD0>
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into mould table.
+Disconnected from the database.(Postgress)
+MOULD OBSERVER AT DIGITAL TWIN: message received.
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "2",
+   "cod_maquina": "150151",
+   "cod_operario": null,
+   "compressibility": 27.200000762939453,
+   "core_status": 0,
+   "cycle_time": 8.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:32:15.153000",
+   "fecha_insercion_reg": "2022-10-03 08:57:08.233000",
+   "id_molde": 19325827,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194035,
+   "indice_calidad_dato": 10,
+   "mould_counter": 1311143,
+   "mould_index": 16681510,
+   "mould_status": 0,
+   "mould_thickness": 280.1000061035156,
+   "pour_status": 1,
+   "reference": 9692,
+   "setting_index": 72545,
+   "time_pour": "2022-10-03 09:00:04",
+   "time_prod": "2022-10-03 08:57:39.547000",
+   "time_shake_out": "2022-10-03 09:32:51.273000"
+}
+<domain.Mould.MouldData object at 0x000002898F6BBAF0>
+MOULD OBSERVER AT DIGITAL TWIN: message received.
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "2",
+   "cod_maquina": "150151",
+   "cod_operario": null,
+   "compressibility": 27.100000381469727,
+   "core_status": 0,
+   "cycle_time": 8.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:28:17.680000",
+   "fecha_insercion_reg": "2022-10-03 08:53:10.743000",
+   "id_molde": 19325771,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194035,
+   "indice_calidad_dato": 10,
+   "mould_counter": 1311113,
+   "mould_index": 16681480,
+   "mould_status": 0,
+   "mould_thickness": 281.3999938964844,
+   "pour_status": 1,
+   "reference": 9692,
+   "setting_index": 72545,
+   "time_pour": "2022-10-03 08:56:06",
+   "time_prod": "2022-10-03 08:53:40.937000",
+   "time_shake_out": "2022-10-03 09:28:52.187000"
+}
+<domain.Mould.MouldData object at 0x000002898F6B9CF0>
+COOLING DRUM Belts Addition: 1
+PREDICTION OBSERVER (Temporal Series): message received for belts.
+{
+   "data_for_prediction": {
+      "humidity": 1.4435040950775146,
+      "mould_size": 30,
+      "moulds_to_calculate": 15,
+      "q_sand_avg": 3.3085714285714283,
+      "temp_avg": 57.0
+   },
+   "datetime": "2023-10-28 09:19:00.344867+00:00",
+   "line": 1,
+   "prediction": 0.20400230920163265,
+   "type": "TAPES"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6B87F0>
+Connected to the database.(InfluxDB)
+PREDICTION POINT to write: [{'measurement': 'water_addition', 'tags': {'line': 999, 'type': 'TAPES'}, 'time': '2023-10-28 09:19:00.344867+00:00', 'fields': {'prediction': 0.20400230920163265, 'temp_avg': 57.0, 'q_sand_avg': 3.3085714285714283, 'mould_size': 30, 'moulds_to_calculate': 15, 'humidity': 1.4435040950775146}}]
+Disconnected from the database.(InfluxDB)
+PREDICTION OBSERVER: message received for belts.
+{
+   "data_for_prediction": {
+      "humidity": 1.4435040950775146,
+      "mould_size": 30,
+      "moulds_to_calculate": 15,
+      "q_sand_avg": 3.3085714285714283,
+      "temp_avg": 57.0
+   },
+   "datetime": "2023-10-28 09:19:00.344867+00:00",
+   "line": 1,
+   "prediction": 0.20400230920163265,
+   "type": "TAPES"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6B87F0>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into chemical composition table.
+Disconnected from the database.(Postgress)
+COOLING DRUM Water Addition for Line 2: 35.99520483202878
+PREDICTION OBSERVER (Temporal Series): message received for line 2
+{
+   "data_for_prediction": {
+      "f_avg": 1,
+      "mould_size": 30,
+      "moulds_to_calculate": 10,
+      "q_metal_avg": 3.1714285714285713,
+      "q_sand_avg": 22.10784437918527
+   },
+   "datetime": "2023-10-28 09:19:00.384639+00:00",
+   "line": 2,
+   "prediction": 35.99520483202878,
+   "type": "DRUM"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F25E9E0>
+Connected to the database.(InfluxDB)
+PREDICTION POINT to write: [{'measurement': 'water_addition', 'tags': {'line': 2, 'type': 'DRUM'}, 'time': '2023-10-28 09:19:00.384639+00:00', 'fields': {'prediction': 35.99520483202878, 'f_avg': 1.0, 'mould_size': 30, 'moulds_to_calculate': 10, 'q_metal_avg': 3.1714285714285713, 'q_sand_avg': 22.10784437918527}}]
+Disconnected from the database.(InfluxDB)
+PREDICTION OBSERVER: message received for line 2
+{
+   "data_for_prediction": {
+      "f_avg": 1,
+      "mould_size": 30,
+      "moulds_to_calculate": 10,
+      "q_metal_avg": 3.1714285714285713,
+      "q_sand_avg": 22.10784437918527
+   },
+   "datetime": "2023-10-28 09:19:00.384639+00:00",
+   "line": 2,
+   "prediction": 35.99520483202878,
+   "type": "DRUM"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F25E9E0>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into chemical composition table.
+Disconnected from the database.(Postgress)
+Notify alarm - Tra ID = 17004
+POURING ALARM OBSERVER: message received for pouring.
+{
+   "comm": null,
+   "desc": "COLADA - Soglia : Alm_Peso_Minimo_Per_Start_Colata - Allarmi Colata",
+   "dur": 0,
+   "ev_desc": "COLADA - Peso Minimo Para Start Colada",
+   "ev_num": 1,
+   "event": "ALLARME ON",
+   "local": "2019-03-15 10:17:03",
+   "m_sec": 375,
+   "time": "2023-10-28 11:19:00.641708",
+   "tra_id": 17004,
+   "uni_id": 32754,
+   "user": null
+}
+<domain.Alarm.Alarm object at 0x000002898F25ED10>
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into pouring alarm table.
+Disconnected from the database.(Postgress)
+Notify mould data - Line = 1 Ref = 6552
+MOULD DATA OBSERVER: message received for line 1
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "1",
+   "cod_maquina": "2568",
+   "cod_operario": null,
+   "compressibility": 26.0,
+   "core_status": 0,
+   "cycle_time": 9.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:32:23.310000",
+   "fecha_insercion_reg": "2022-10-03 08:58:15.433000",
+   "id_molde": 19325842,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194032,
+   "indice_calidad_dato": 10,
+   "mould_counter": 2777108,
+   "mould_index": 9636044,
+   "mould_status": 0,
+   "mould_thickness": 246.1999969482422,
+   "pour_status": 1,
+   "reference": 6552,
+   "setting_index": 103205,
+   "time_pour": "2022-10-03 09:08:04",
+   "time_prod": "2022-10-03 09:05:14.857000",
+   "time_shake_out": "2022-10-03 09:39:26.420000"
+}
+<domain.Mould.MouldData object at 0x000002898F25F5E0>
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Disconnected from the database.(Postgress)
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into mould table.
+Disconnected from the database.(Postgress)
+MOULD OBSERVER AT DIGITAL TWIN: message received.
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "1",
+   "cod_maquina": "2568",
+   "cod_operario": null,
+   "compressibility": 26.0,
+   "core_status": 0,
+   "cycle_time": 9.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:32:23.310000",
+   "fecha_insercion_reg": "2022-10-03 08:58:15.433000",
+   "id_molde": 19325842,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194032,
+   "indice_calidad_dato": 10,
+   "mould_counter": 2777108,
+   "mould_index": 9636044,
+   "mould_status": 0,
+   "mould_thickness": 246.1999969482422,
+   "pour_status": 1,
+   "reference": 6552,
+   "setting_index": 103205,
+   "time_pour": "2022-10-03 09:08:04",
+   "time_prod": "2022-10-03 09:05:14.857000",
+   "time_shake_out": "2022-10-03 09:39:26.420000"
+}
+<domain.Mould.MouldData object at 0x000002898F25F640>
+MOULD OBSERVER AT DIGITAL TWIN: message received.
+{
+   "cod_aplic_captura": "PDCacpture - DISA",
+   "cod_linea": "1",
+   "cod_maquina": "2568",
+   "cod_operario": null,
+   "compressibility": 26.0,
+   "core_status": 0,
+   "cycle_time": 9.0,
+   "fecha_actualizacion_reg": "2022-10-03 09:29:17.183000",
+   "fecha_insercion_reg": "2022-10-03 08:55:07.980000",
+   "id_molde": 19325798,
+   "id_molinada": 474990,
+   "id_parametros_molde": 194032,
+   "indice_calidad_dato": 10,
+   "mould_counter": 2777088,
+   "mould_index": 9636024,
+   "mould_status": 0,
+   "mould_thickness": 247.6999969482422,
+   "pour_status": 1,
+   "reference": 6552,
+   "setting_index": 103205,
+   "time_pour": "2022-10-03 09:04:58",
+   "time_prod": "2022-10-03 09:02:09.090000",
+   "time_shake_out": "2022-10-03 09:36:20.017000"
+}
+<domain.Mould.MouldData object at 0x000002898F25ED40>
+COOLING DRUM Belts Addition: 1
+PREDICTION OBSERVER (Temporal Series): message received for belts.
+{
+   "data_for_prediction": {
+      "humidity": 1.4435040950775146,
+      "mould_size": 30,
+      "moulds_to_calculate": 15,
+      "q_sand_avg": 3.2914285714285714,
+      "temp_avg": 57.0
+   },
+   "datetime": "2023-10-28 09:19:01.024984+00:00",
+   "line": 1,
+   "prediction": 0.20399469468734693,
+   "type": "TAPES"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6D6320>
+Connected to the database.(InfluxDB)
+PREDICTION POINT to write: [{'measurement': 'water_addition', 'tags': {'line': 999, 'type': 'TAPES'}, 'time': '2023-10-28 09:19:01.024984+00:00', 'fields': {'prediction': 0.20399469468734693, 'temp_avg': 57.0, 'q_sand_avg': 3.2914285714285714, 'mould_size': 30, 'moulds_to_calculate': 15, 'humidity': 1.4435040950775146}}]
+Disconnected from the database.(InfluxDB)
+PREDICTION OBSERVER: message received for belts.
+{
+   "data_for_prediction": {
+      "humidity": 1.4435040950775146,
+      "mould_size": 30,
+      "moulds_to_calculate": 15,
+      "q_sand_avg": 3.2914285714285714,
+      "temp_avg": 57.0
+   },
+   "datetime": "2023-10-28 09:19:01.024984+00:00",
+   "line": 1,
+   "prediction": 0.20399469468734693,
+   "type": "TAPES"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6D6320>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into chemical composition table.
+Disconnected from the database.(Postgress)
+COOLING DRUM Water Addition for Line 1: 38.64536660663028
+PREDICTION OBSERVER (Temporal Series): message received for line 1
+{
+   "data_for_prediction": {
+      "f_avg": 1,
+      "mould_size": 20,
+      "moulds_to_calculate": 7,
+      "q_metal_avg": 3.4285714285714284,
+      "q_sand_avg": 19.226755884038187
+   },
+   "datetime": "2023-10-28 09:19:01.068807+00:00",
+   "line": 1,
+   "prediction": 38.64536660663028,
+   "type": "DRUM"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6D7010>
+Connected to the database.(InfluxDB)
+PREDICTION POINT to write: [{'measurement': 'water_addition', 'tags': {'line': 1, 'type': 'DRUM'}, 'time': '2023-10-28 09:19:01.068807+00:00', 'fields': {'prediction': 38.64536660663028, 'f_avg': 1.0, 'mould_size': 20, 'moulds_to_calculate': 7, 'q_metal_avg': 3.4285714285714284, 'q_sand_avg': 19.226755884038187}}]
+Disconnected from the database.(InfluxDB)
+PREDICTION OBSERVER: message received for line 1
+{
+   "data_for_prediction": {
+      "f_avg": 1,
+      "mould_size": 20,
+      "moulds_to_calculate": 7,
+      "q_metal_avg": 3.4285714285714284,
+      "q_sand_avg": 19.226755884038187
+   },
+   "datetime": "2023-10-28 09:19:01.068807+00:00",
+   "line": 1,
+   "prediction": 38.64536660663028,
+   "type": "DRUM"
+}
+<domain.Addition.WaterAdditionData object at 0x000002898F6D7010>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into chemical composition table.
+Disconnected from the database.(Postgress)
+Notify sensor L1 - Timestamp = 2023-10-28 09:19:04.249459+00:00
+SENSORS OBSERVER (Temporal Series): message received for line 1
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.3049768209457397,
+   "line": 1,
+   "mould_temp": 225.6533203125,
+   "temperature_output": 56.900001525878906,
+   "timestamp": "2023-10-28 09:19:04.249459+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6D77F0>
+Connected to the database.(InfluxDB)
+SENSOR POINT to write: [{'measurement': 'foundry_sensors', 'tags': {'line': 1}, 'time': '2023-10-28 09:19:04.249459+00:00', 'fields': {'bypass_activated': 0, 'cooling_drum_running': 1, 'temperature_output': 56.900001525878906, 'mould_temp': 225.6533203125, 'ambient_temperature': 24.5, 'humidity': 1.3049768209457397}}]
+Disconnected from the database.(InfluxDB)
+SENSORS OBSERVER: message received for line 1
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.3049768209457397,
+   "line": 1,
+   "mould_temp": 225.6533203125,
+   "temperature_output": 56.900001525878906,
+   "timestamp": "2023-10-28 09:19:04.249459+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6D77F0>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into sensor table.
+Disconnected from the database.(Postgress)
+SENSORS OBSERVER AT DIGITAL TWIN: message received.
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.3049768209457397,
+   "line": 1,
+   "mould_temp": 225.6533203125,
+   "temperature_output": 56.900001525878906,
+   "timestamp": "2023-10-28 09:19:04.249459+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6D77F0>
+SENSORS OBSERVER AT DIGITAL TWIN: message received.
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.3049768209457397,
+   "line": 1,
+   "mould_temp": 225.6533203125,
+   "temperature_output": 56.900001525878906,
+   "timestamp": "2023-10-28 09:19:04.249459+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6BB820>
+Notify sensor L2 - Timestamp = 2023-10-28 09:19:04.249459+00:00
+SENSORS OBSERVER (Temporal Series): message received for line 2
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.3049768209457397,
+   "line": 2,
+   "mould_temp": 96.96903991699219,
+   "temperature_output": 66.96807861328125,
+   "timestamp": "2023-10-28 09:19:04.249459+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6D6350>
+Connected to the database.(InfluxDB)
+SENSOR POINT to write: [{'measurement': 'foundry_sensors', 'tags': {'line': 2}, 'time': '2023-10-28 09:19:04.249459+00:00', 'fields': {'bypass_activated': 0, 'cooling_drum_running': 1, 'temperature_output': 66.96807861328125, 'mould_temp': 96.96903991699219, 'ambient_temperature': 24.5, 'humidity': 1.3049768209457397}}]
+Disconnected from the database.(InfluxDB)
+SENSORS OBSERVER: message received for line 2
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.3049768209457397,
+   "line": 2,
+   "mould_temp": 96.96903991699219,
+   "temperature_output": 66.96807861328125,
+   "timestamp": "2023-10-28 09:19:04.249459+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6D6350>
+Connected to the database.(Postgress)
+Changes committed to the database.(Postgress)
+1 Record inserted successfully into sensor table.
+Disconnected from the database.(Postgress)
+SENSORS OBSERVER AT DIGITAL TWIN: message received.
+{
+   "ambient_temperature": 24.5,
+   "bypass_activated": false,
+   "cooling_drum_running": true,
+   "humidity": 1.3049768209457397,
+   "line": 2,
+   "mould_temp": 96.96903991699219,
+   "temperature_output": 66.96807861328125,
+   "timestamp": "2023-10-28 09:19:04.249459+00:00"
+}
+<domain.Sensor.SensorData object at 0x000002898F6D6350>
+
+
+
+
+
+
+
+Stoping all process work...
+        - Stopping extraction work...
+        - Stopping loading work...
+        - Stopping transformer work...
+We are stoping the running threads (no cancelation tokens used, so we need to wait until each iteration value.)
+BYE.

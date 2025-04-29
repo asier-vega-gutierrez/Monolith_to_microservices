@@ -1,0 +1,4 @@
+Para levantar todos los repostorios de las bases de datos:
+docker compose -p mucsi-cloud-repositories -f Repositorios/docker-compose.yaml up -d
+Para pararlos:
+docker compose -p mucsi-cloud-platform -f Repositorios/docker-compose.yaml down
