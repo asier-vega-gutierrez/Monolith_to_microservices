@@ -5,20 +5,7 @@
   #https://alexhernandez.info/articles/infrastructure/how-to-install-docker-using-ansible/
 
   tasks:
-  - name: mkdir repository
-    ansible.builtin.file:
-        path: ~/DB/Repositorios
-        state: directory
-  - name: mkdir storage
-    ansible.builtin.file:
-        path: ~/DB/Repositorios/storage
-        state: directory
-  - name: copy docker compose
-    ansible.builtin.copy:
-        src: /home/asier/cloud/MaquinasVirtuales/DB/Repositorios/docker-compose.yaml
-        dest: ~/DB/Repositorios
-        remote_src: no
-
+  # Setup virtaul machine
   - name: install dependencies
     apt:
         name: "{{item}}"
@@ -71,3 +58,22 @@
       path: /usr/local/bin/docker-compose
       owner: ubuntu
       group: ubuntu
+      
+  #Compy own files and start db services
+  - name: mkdir repository
+    ansible.builtin.file:
+        path: /home/adminasier/db/Repositorios
+        state: directory
+  - name: mkdir storage
+    ansible.builtin.file:
+        path: /home/adminasier/db/Repositorios/storage
+        state: directory
+  - name: copy docker compose
+    ansible.builtin.copy:
+        src: /home/asier/cloud/MaquinasVirtuales/DB/Repositorios/docker-compose.yaml
+        dest: /home/adminasier/db/Repositorios/
+        remote_src: no
+  - name: docker compose up
+    command: docker-compose -f /home/adminasier/db/Repositorios/docker-compose.yaml up -d
+    args:
+      chdir: /home/adminasier/db/Repositorios
