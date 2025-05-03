@@ -59,21 +59,82 @@
       owner: ubuntu
       group: ubuntu
       
-  #Compy own files and start db services
+  #Copy own files and start db services
   - name: mkdir repository
     ansible.builtin.file:
-        path: /home/adminasier/db/Repositorios
+        path: /home/adminasier/db/repositorios
         state: directory
   - name: mkdir storage
     ansible.builtin.file:
-        path: /home/adminasier/db/Repositorios/storage
+        path: /home/adminasier/db/repositorios/Storage
         state: directory
   - name: copy docker compose
     ansible.builtin.copy:
         src: /home/asier/cloud/MaquinasVirtuales/DB/Repositorios/docker-compose.yaml
-        dest: /home/adminasier/db/Repositorios/
+        dest: /home/adminasier/db/repositorios/
         remote_src: no
-  - name: docker compose up
-    command: docker-compose -f /home/adminasier/db/Repositorios/docker-compose.yaml up -d
+
+  # Copy Storage files for MySQL, SQL Server, PostgreSQL, and InfluxDB
+  - name: Copy MySQL storage files
+    ansible.builtin.copy:
+      src: /home/asier/cloud/MaquinasVirtuales/DB/Repositorios/storage/MySql_Input   
+      dest: /home/adminasier/db/repositorios/Storage/
+      remote_src: no
+      mode: '0755'
+      force: no
+
+  - name: Copy MySQL storage files
+    ansible.builtin.copy:
+      src: /home/asier/cloud/MaquinasVirtuales/DB/Repositorios/storage/MySql_Input   
+      dest: /home/adminasier/db/repositorios/Storage/
+      remote_src: no
+      mode: '0755'
+      force: no
+      
+  - name: Copy SQL Server storage files
+    ansible.builtin.copy:
+      src: /home/asier/cloud/MaquinasVirtuales/DB/Repositorios/storage/azure-sql-edge
+      dest: /home/adminasier/db/repositorios/Storage/
+      remote_src: no
+      mode: '0755'
+      force: no
+
+  - name: Copy PostgreSQL storage files
+    ansible.builtin.copy:
+      src: /home/asier/cloud/MaquinasVirtuales/DB/Repositorios/storage/Relational_Output
+      dest: /home/adminasier/db/repositorios/Storage/
+      remote_src: no
+      mode: '0755'
+      force: no
+
+  - name: Copy InfluxDB storage files
+    ansible.builtin.copy:
+      src: /home/asier/cloud/MaquinasVirtuales/DB/Repositorios/storage/influxdb2
+      dest: /home/adminasier/db/repositorios/Storage/
+      remote_src: no
+      mode: '0755'
+      force: no
+
+  - name: Change permissions for SQL Server storage files
+    ansible.builtin.command:
+      cmd: sudo chmod -R 777 ./Storage/azure-sql-edge/log
+      chdir: /home/adminasier/db/repositorios/Storage/azure-sql-edge
     args:
-      chdir: /home/adminasier/db/Repositorios
+      warn: false
+  - name: Change permissions for SQL Server storage files
+    ansible.builtin.command:
+      cmd: sudo chmod -R 777 ./Storage/azure-sql-edge/data
+      chdir: /home/adminasier/db/repositorios/Storage/azure-sql-edge
+    args:
+      warn: false
+  - name: Change permissions for SQL Server storage files
+    ansible.builtin.command:
+      cmd: sudo chmod -R 777 ./Storage/azure-sql-edge/secrets
+      chdir: /home/adminasier/db/repositorios/Storage/azure-sql-edge
+    args:
+      warn: false
+
+  - name: docker compose up
+    command: docker-compose -f /home/adminasier/db/repositorios/docker-compose.yaml up -d
+    args:
+      chdir: /home/adminasier/db/repositorios

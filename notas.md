@@ -35,7 +35,7 @@ https://www.youtube.com/watch?v=V53AHWun17s&t=393s
 ## ssh
 ssh-keygen -t rsa
 C:\Users\asier/.ssh/azurekey
-ssh -i ~/.ssh/azurekey adminasier@<public-ip>
+ssh -i ~/.ssh/azurekey adminasier@13.95.207.136
 
 
 

@@ -18,8 +18,8 @@ resource "azurerm_network_security_rule" "db_rule_msql_output" {
   direction                   = "Outbound"
   access                      = "Allow"
   protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "3306"
+  source_port_range           = "3306"
+  destination_port_range      = "*"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
@@ -33,6 +33,84 @@ resource "azurerm_network_security_rule" "db_rule_msql_input" {
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "3306"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "10.0.1.5"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.db_nsg.name
+}
+resource "azurerm_network_security_rule" "db_rule_sqlserver_output" {
+  name                        = "db_rule_sqlserver_output"
+  priority                    = 103
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "1433"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.db_nsg.name
+}
+resource "azurerm_network_security_rule" "db_rule_sqlserver_input" {
+  name                        = "db_rule_sqlserver_input"
+  priority                    = 104
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "1433"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "10.0.1.5"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.db_nsg.name
+}
+resource "azurerm_network_security_rule" "db_rule_postgres_output" {
+  name                        = "db_rule_postgres_output"
+  priority                    = 105
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "5432"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.db_nsg.name
+}
+resource "azurerm_network_security_rule" "db_rule_postgres_input" {
+  name                        = "db_rule_postgres_input"
+  priority                    = 106
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "5432"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "10.0.1.5"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.db_nsg.name
+}
+resource "azurerm_network_security_rule" "db_rule_influxdb_output" {
+  name                        = "db_rule_influxdb_output"
+  priority                    = 107
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "8086"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.db_nsg.name
+}
+resource "azurerm_network_security_rule" "db_rule_influxdb_input" {
+  name                        = "db_rule_influxdb_input"
+  priority                    = 108
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "8086"
   source_address_prefix       = "*"
   destination_address_prefix  = "10.0.1.5"
   resource_group_name         = var.resource_group_name
