@@ -30,13 +30,14 @@ https://www.youtube.com/watch?v=V53AHWun17s&t=393s
   terraform apply -target 
   terraform apply -destroy
   terraform state list
+  terraform apply -target='module.cq'
 
 
 ## ssh
 ssh-keygen -t rsa
 C:\Users\asier/.ssh/azurekey
-ssh -i ~/.ssh/azurekey adminasier@13.95.207.136
-
+ssh -i ~/.ssh/azurekey adminasier@51.145.225.152
+/home/adminasier/db/repositorios/Storage/azure-sql-edge
 
 
 

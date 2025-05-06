@@ -10,7 +10,7 @@ resource "azurerm_network_security_rule" "db_rule_ssh" {
   source_address_prefix       = "*"
   destination_address_prefix  = "10.0.1.5"
   resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  network_security_group_name = var.network_security_group_name
 }
 resource "azurerm_network_security_rule" "db_rule_msql_output" {
   name                        = "db_rule_msql_output"
@@ -23,7 +23,7 @@ resource "azurerm_network_security_rule" "db_rule_msql_output" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  network_security_group_name = var.network_security_group_name
 }
 resource "azurerm_network_security_rule" "db_rule_msql_input" {
   name                        = "db_rule_msql_input"
@@ -36,7 +36,7 @@ resource "azurerm_network_security_rule" "db_rule_msql_input" {
   source_address_prefix       = "*"
   destination_address_prefix  = "10.0.1.5"
   resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  network_security_group_name = var.network_security_group_name
 }
 resource "azurerm_network_security_rule" "db_rule_sqlserver_output" {
   name                        = "db_rule_sqlserver_output"
@@ -49,7 +49,7 @@ resource "azurerm_network_security_rule" "db_rule_sqlserver_output" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  network_security_group_name = var.network_security_group_name
 }
 resource "azurerm_network_security_rule" "db_rule_sqlserver_input" {
   name                        = "db_rule_sqlserver_input"
@@ -62,7 +62,7 @@ resource "azurerm_network_security_rule" "db_rule_sqlserver_input" {
   source_address_prefix       = "*"
   destination_address_prefix  = "10.0.1.5"
   resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  network_security_group_name = var.network_security_group_name
 }
 resource "azurerm_network_security_rule" "db_rule_postgres_output" {
   name                        = "db_rule_postgres_output"
@@ -75,7 +75,7 @@ resource "azurerm_network_security_rule" "db_rule_postgres_output" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  network_security_group_name = var.network_security_group_name
 }
 resource "azurerm_network_security_rule" "db_rule_postgres_input" {
   name                        = "db_rule_postgres_input"
@@ -88,7 +88,7 @@ resource "azurerm_network_security_rule" "db_rule_postgres_input" {
   source_address_prefix       = "*"
   destination_address_prefix  = "10.0.1.5"
   resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  network_security_group_name = var.network_security_group_name
 }
 resource "azurerm_network_security_rule" "db_rule_influxdb_output" {
   name                        = "db_rule_influxdb_output"
@@ -101,7 +101,7 @@ resource "azurerm_network_security_rule" "db_rule_influxdb_output" {
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  network_security_group_name = var.network_security_group_name
 }
 resource "azurerm_network_security_rule" "db_rule_influxdb_input" {
   name                        = "db_rule_influxdb_input"
@@ -114,5 +114,5 @@ resource "azurerm_network_security_rule" "db_rule_influxdb_input" {
   source_address_prefix       = "*"
   destination_address_prefix  = "10.0.1.5"
   resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  network_security_group_name = var.network_security_group_name
 }

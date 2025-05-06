@@ -5,6 +5,7 @@
   #https://alexhernandez.info/articles/infrastructure/how-to-install-docker-using-ansible/
 
   tasks:
+
   # Setup virtaul machine
   - name: install dependencies
     apt:
@@ -117,24 +118,19 @@
 
   - name: Change permissions for SQL Server storage files
     ansible.builtin.command:
-      cmd: sudo chmod -R 777 ./Storage/azure-sql-edge/log
+      cmd: sudo chmod -R 777 ./log
       chdir: /home/adminasier/db/repositorios/Storage/azure-sql-edge
-    args:
-      warn: false
   - name: Change permissions for SQL Server storage files
     ansible.builtin.command:
-      cmd: sudo chmod -R 777 ./Storage/azure-sql-edge/data
+      cmd: sudo chmod -R 777 ./data
       chdir: /home/adminasier/db/repositorios/Storage/azure-sql-edge
-    args:
-      warn: false
   - name: Change permissions for SQL Server storage files
     ansible.builtin.command:
-      cmd: sudo chmod -R 777 ./Storage/azure-sql-edge/secrets
+      cmd: sudo chmod -R 777 ./secrets
       chdir: /home/adminasier/db/repositorios/Storage/azure-sql-edge
-    args:
-      warn: false
 
   - name: docker compose up
     command: docker-compose -f /home/adminasier/db/repositorios/docker-compose.yaml up -d
     args:
       chdir: /home/adminasier/db/repositorios
+  

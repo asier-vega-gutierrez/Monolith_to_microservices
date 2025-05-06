@@ -1,15 +1,16 @@
 
+
 # Public ip to know where to access
-resource "azurerm_public_ip" "db_public_ip" {
-  name                = "db_public_ip"
+resource "azurerm_public_ip" "sqls_public_ip" {
+  name                = "sqls_public_ip"
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
   allocation_method   = "Dynamic"
 }
 
 # Network interface to be able to use the public addres
-resource "azurerm_network_interface" "db_ni" {
-  name                = "db_ni"
+resource "azurerm_network_interface" "sqls_ni" {
+  name                = "sqls_ni"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
@@ -17,26 +18,26 @@ resource "azurerm_network_interface" "db_ni" {
     name                          = "internal"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.0.1.5"
-    public_ip_address_id          = azurerm_public_ip.db_public_ip.id
+    private_ip_address            = "10.0.2.5"
+    public_ip_address_id          = azurerm_public_ip.sqls_public_ip.id
   }
 }
 
 # SSH public key to be able to access the virtual machine
-resource "azurerm_ssh_public_key" "db_spk" {
-  name                = "db_spk"
+resource "azurerm_ssh_public_key" "sqls_spk" {
+  name                = "sqls_spk"
   resource_group_name = var.resource_group_name
   location            = "West Europe"
   public_key          = file("~/.ssh/azurekey.pub")
 }
 
 # Create a virtual machine with the created resources
-resource "azurerm_virtual_machine" "bd-vm" {
-  name                  = "bd-vm"
+resource "azurerm_virtual_machine" "sqls-vm" {
+  name                  = "sqls-vm"
   location              = var.resource_group_location
   resource_group_name   = var.resource_group_name
-  network_interface_ids = [azurerm_network_interface.db_ni.id]
-  vm_size               = "Standard_B2s" 
+  network_interface_ids = [azurerm_network_interface.sqls_ni.id]
+  vm_size               = "Standard_B1ls" 
   
   delete_os_disk_on_termination = true
   delete_data_disks_on_termination = true
@@ -49,14 +50,14 @@ resource "azurerm_virtual_machine" "bd-vm" {
   }
 
   storage_os_disk {
-    name              = "OSdisk" #TODO cambiar esto a db_OSdisk
+    name              = "sqls_OSdisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
 
   os_profile {
-    computer_name  = "bd-vm"
+    computer_name  = "sqls-vm"
     admin_username = "adminasier"
     admin_password = "Admin1234!"
   }
@@ -65,7 +66,7 @@ resource "azurerm_virtual_machine" "bd-vm" {
     disable_password_authentication = true
     ssh_keys {
       path     = "/home/adminasier/.ssh/authorized_keys"
-      key_data = azurerm_ssh_public_key.db_spk.public_key
+      key_data = azurerm_ssh_public_key.sqls_spk.public_key
     }
   }
 }
