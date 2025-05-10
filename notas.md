@@ -36,30 +36,15 @@ https://www.youtube.com/watch?v=V53AHWun17s&t=393s
 ## ssh
 ssh-keygen -t rsa
 C:\Users\asier/.ssh/azurekey
-ssh -i ~/.ssh/azurekey adminasier@51.145.225.152
-/home/adminasier/db/repositorios/Storage/azure-sql-edge
+ssh -i ~/.ssh/azurekey adminasier@10.0.1.5
 
+# ssh-agent
+ssh-agent
+*Copiar pegar en un shell lo que saca
+ssh-add ~/ssh/azurekey
+ssh-add -l 
+ssh -A -i ~/.ssh/azurekey adminasier@13.81.0.82
+ssh adminasier@10.0.1.5
 
-
-# DNS zone
-resource "azurerm_private_dns_zone" "dns_zone" {
-  name                = "asiertxxo.com"
-  resource_group_name = azurerm_resource_group.asiertxxo_rg.name
-}
-
-# Link the DNS zone to the virtual network
-resource "azurerm_private_dns_zone_virtual_network_link" "dns_zone_vnl" {
-  name                  = "test"
-  resource_group_name   = azurerm_resource_group.asiertxxo_rg.name
-  private_dns_zone_name = azurerm_private_dns_zone.dns_zone.name
-  virtual_network_id    = azurerm_virtual_network.asiertxxo_vn.id
-}
-
-# DNS A Record for the VM
-resource "azurerm_private_dns_a_record" "vm_record" {
-  name                = "vm"  # Subdomain (e.g., vm.asiertxxo.com)
-  zone_name           = azurerm_private_dns_zone.dns_zone.name
-  resource_group_name = azurerm_resource_group.asiertxxo_rg.name
-  ttl                 = 300
-  records             = [azurerm_network_interface.asiertxxo_ni.private_ip_address]  # Pribate IP
-}
+# git
+git reset --hard HEAD

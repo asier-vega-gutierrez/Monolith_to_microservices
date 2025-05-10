@@ -1,11 +1,11 @@
 
-# Public ip to know where to access
-resource "azurerm_public_ip" "db_public_ip" {
-  name                = "db_public_ip"
-  resource_group_name = var.resource_group_name
-  location            = var.resource_group_location
-  allocation_method   = "Dynamic"
-}
+# # Public ip to know where to access
+# resource "azurerm_public_ip" "db_public_ip" {
+#   name                = "db_public_ip"
+#   resource_group_name = var.resource_group_name
+#   location            = var.resource_group_location
+#   allocation_method   = "Dynamic"
+# }
 
 # Network interface to be able to use the public addres
 resource "azurerm_network_interface" "db_ni" {
@@ -18,7 +18,7 @@ resource "azurerm_network_interface" "db_ni" {
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Static"
     private_ip_address            = "10.0.1.5"
-    public_ip_address_id          = azurerm_public_ip.db_public_ip.id
+    #public_ip_address_id          = azurerm_public_ip.db_public_ip.id
   }
 }
 
@@ -49,7 +49,7 @@ resource "azurerm_virtual_machine" "bd-vm" {
   }
 
   storage_os_disk {
-    name              = "OSdisk" #TODO cambiar esto a db_OSdisk
+    name              = "db_OSdisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"

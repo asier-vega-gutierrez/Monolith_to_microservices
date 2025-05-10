@@ -1,11 +1,11 @@
 
-# Public ip to know where to access
-resource "azurerm_public_ip" "mysql_public_ip" {
-  name                = "mysql_public_ip"
-  resource_group_name = var.resource_group_name
-  location            = var.resource_group_location
-  allocation_method   = "Dynamic"
-}
+# # Public ip to know where to access
+# resource "azurerm_public_ip" "mysql_public_ip" {
+#   name                = "mysql_public_ip"
+#   resource_group_name = var.resource_group_name
+#   location            = var.resource_group_location
+#   allocation_method   = "Dynamic"
+# }
 
 # Network interface to be able to use the public addres
 resource "azurerm_network_interface" "mysql_ni" {
@@ -18,7 +18,7 @@ resource "azurerm_network_interface" "mysql_ni" {
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Static"
     private_ip_address            = "10.0.2.6"
-    public_ip_address_id          = azurerm_public_ip.mysql_public_ip.id
+    #public_ip_address_id          = azurerm_public_ip.mysql_public_ip.id
   }
 }
 

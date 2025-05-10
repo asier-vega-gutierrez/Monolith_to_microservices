@@ -29,6 +29,25 @@ resource "azurerm_virtual_network" "vn" {
   depends_on = [ azurerm_resource_group.cloud_rg ]
 }
 
+#subnet for the jumpbox
+resource "azurerm_subnet" "jumpbox_subnet" {
+  name                 = "jumpbox_subnet"
+  resource_group_name  = azurerm_resource_group.cloud_rg.name
+  virtual_network_name = azurerm_virtual_network.vn.name
+  address_prefixes     = ["10.0.10.0/24"]
+}
+# Security group that cotains all network rules
+resource "azurerm_network_security_group" "jumpbox_nsg" {
+  name                = "jumpbox_nsg"
+  location            = azurerm_resource_group.cloud_rg.location
+  resource_group_name = azurerm_resource_group.cloud_rg.name
+}
+# Asociate subnet to network security group
+resource "azurerm_subnet_network_security_group_association" "jumpbox_nsg_association" {
+  subnet_id                 = azurerm_subnet.jumpbox_subnet.id
+  network_security_group_id = azurerm_network_security_group.jumpbox_nsg.id
+}
+
 # Subnet for the DB
 resource "azurerm_subnet" "db_subnet" {
   name                 = "db_subnet"
@@ -47,7 +66,6 @@ resource "azurerm_subnet_network_security_group_association" "db_nsg_association
   subnet_id                 = azurerm_subnet.db_subnet.id
   network_security_group_id = azurerm_network_security_group.db_nsg.id
 }
-
 
 # Subnet for the extractors
 resource "azurerm_subnet" "extractors_subnet" {
@@ -68,22 +86,57 @@ resource "azurerm_subnet_network_security_group_association" "extractors_nsg_ass
   network_security_group_id = azurerm_network_security_group.extractors_nsg.id
 }
 
+# Subnet for the grcp
+resource "azurerm_subnet" "grcp_subnet" {
+  name                 = "grcp_subnet"
+  resource_group_name  = azurerm_resource_group.cloud_rg.name
+  virtual_network_name = azurerm_virtual_network.vn.name
+  address_prefixes     = ["10.0.3.0/24"]
+}
+# Security group that cotains all network rules
+resource "azurerm_network_security_group" "grcp_nsg" {
+  name                = "grcp_nsg"
+  location            = azurerm_resource_group.cloud_rg.location
+  resource_group_name = azurerm_resource_group.cloud_rg.name
+}
+# Asociate subnet to network security group
+resource "azurerm_subnet_network_security_group_association" "grcp_nsg_association" {
+  subnet_id                 = azurerm_subnet.grcp_subnet.id
+  network_security_group_id = azurerm_network_security_group.grcp_nsg.id
+}
+
 
 # Modules
-module "db" {
-  source = "./db"
+module "jumpbox" {
+  source = "./jumpbox"
   resource_group_name   = azurerm_resource_group.cloud_rg.name
   resource_group_location = azurerm_resource_group.cloud_rg.location
   virtual_network_name = azurerm_virtual_network.vn.name
-  subnet_id = azurerm_subnet.db_subnet.id
-  network_security_group_name = azurerm_network_security_group.db_nsg.name
+  subnet_id = azurerm_subnet.jumpbox_subnet.id
+  network_security_group_name = azurerm_network_security_group.jumpbox_nsg.name
 }
-module "extractors" {
-  source = "./extractors"
+# module "db" {
+#   source = "./db"
+#   resource_group_name   = azurerm_resource_group.cloud_rg.name
+#   resource_group_location = azurerm_resource_group.cloud_rg.location
+#   virtual_network_name = azurerm_virtual_network.vn.name
+#   subnet_id = azurerm_subnet.db_subnet.id
+#   network_security_group_name = azurerm_network_security_group.db_nsg.name
+# }
+# module "extractors" {
+#   source = "./extractors"
+#   resource_group_name   = azurerm_resource_group.cloud_rg.name
+#   resource_group_location = azurerm_resource_group.cloud_rg.location
+#   virtual_network_name = azurerm_virtual_network.vn.name
+#   subnet_id = azurerm_subnet.extractors_subnet.id
+#   network_security_group_name = azurerm_network_security_group.extractors_nsg.name
+# }
+module "grpc" {
+  source = "./grpc"
   resource_group_name   = azurerm_resource_group.cloud_rg.name
   resource_group_location = azurerm_resource_group.cloud_rg.location
   virtual_network_name = azurerm_virtual_network.vn.name
-  subnet_id = azurerm_subnet.extractors_subnet.id
-  network_security_group_name = azurerm_network_security_group.extractors_nsg.name
+  subnet_id = azurerm_subnet.grcp_subnet.id
+  network_security_group_name = azurerm_network_security_group.grcp_nsg.name
 }
 

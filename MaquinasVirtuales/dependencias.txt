@@ -1,7 +1,5 @@
 pip install fastapi uvicorn
 pip install httpx
-pip install grpcio
-pip install grpcio-tools
 pip install pandas
 pip install influxdb_client
 pip install pymysql
@@ -12,3 +10,9 @@ pip install kafka-python
 EN WSL
 pip install ansible
 pip install ansible-lint
+
+
+
+Para el servico de grcp
+pip install grpcio  
+pip install grpcio-tools

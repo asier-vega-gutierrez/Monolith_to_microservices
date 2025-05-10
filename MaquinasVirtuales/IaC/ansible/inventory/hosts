@@ -1,2 +1,19 @@
-[db]
-20.107.120.199 ansible_connection=ssh ansible_ssh_private_key_file=~/ssh/azurekey ansible_user=testadmin
+#[db]
+#51.145.225.152 ansible_connection=ssh ansible_ssh_private_key_file=~/ssh/azurekey ansible_user=adminasier
+
+all:
+  hosts:
+    db:
+      ansible_host: 10.0.1.5
+      ansible_user: adminasier
+      ansible_ssh_private_key_file: /home/asier/ssh/azurekey
+    extractors:
+      ansible_host: 10.0.1.5
+      ansible_user: adminasier
+      ansible_ssh_private_key_file: /home/asier/ssh/azurekey
+    grpc:
+      ansible_host: 10.0.3.5
+      ansible_user: adminasier
+      ansible_ssh_private_key_file: /home/asier/ssh/azurekey
+  vars:
+    ansible_ssh_common_args: '-o ProxyCommand="ssh -i /home/asier/ssh/azurekey -W %h:%p adminasier@40.68.97.76" -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
