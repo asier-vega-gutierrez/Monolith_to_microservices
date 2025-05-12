@@ -27,14 +27,14 @@ class ApplicationConfiguration(metaclass=SingletonMeta):
         DATA INPUT CONFIGURATION
         """
 
-        self.communcation_server = str('localhost' if os.getenv('GRPC_IP') == None else os.getenv('GRPC_IP'))
+        self.communcation_server = str('10.0.3.5' if os.getenv('GRPC_IP') == None else os.getenv('GRPC_IP'))
         self.communication_port = str('50051' if os.getenv('GRPC_PORT') == None else os.getenv('GRPC_PORT'))
 
         # File to read
         self.composition_file_path = str('/Users/jnieves/Documents/Universidad de Deusto/2023/Cloud Computing/Practica/00 - Monolitico/Solucion/repositorios/storage/file_input/data/cq.csv' if os.getenv('COMPOSITION_FILE_PATH') == None else os.getenv('COMPOSITION_FILE_PATH'))
         
         # MySql storage
-        self.mysql_ip = str('localhost' if os.getenv('MYSQL_IP') == None else os.getenv('MYSQL_IP'))
+        self.mysql_ip = str('10.0.1.5' if os.getenv('MYSQL_IP') == None else os.getenv('MYSQL_IP'))
         self.mysql_port = int(3306 if os.getenv('MYSQL_PORT') == None else os.getenv('MYSQL_PORT'))
         self.mysql_user = str('root' if os.getenv('MYSQL_USER') == None else os.getenv('MYSQL_USER'))
         self.mysql_pass = str('MUCSI_Deusto2022' if os.getenv('MYSQL_PASS') == None else os.getenv('MYSQL_PASS'))

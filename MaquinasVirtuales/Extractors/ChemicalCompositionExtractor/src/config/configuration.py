@@ -23,7 +23,7 @@ class ApplicationConfiguration(metaclass=SingletonMeta):
         import os
         
 
-        self.communcation_server = str('localhost' if os.getenv('GRPC_IP') == None else os.getenv('GRPC_IP'))
+        self.communcation_server = str('10.0.3.5' if os.getenv('GRPC_IP') == None else os.getenv('GRPC_IP'))
         self.communication_port = str('50051' if os.getenv('GRPC_PORT') == None else os.getenv('GRPC_PORT'))
 
         """

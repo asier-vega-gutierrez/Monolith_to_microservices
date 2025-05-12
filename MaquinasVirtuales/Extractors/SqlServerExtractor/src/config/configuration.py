@@ -26,7 +26,7 @@ class ApplicationConfiguration(metaclass=SingletonMeta):
         DATA INPUT CONFIGURATION
         """
 
-        self.communcation_server = str('localhost' if os.getenv('GRPC_IP') == None else os.getenv('GRPC_IP'))
+        self.communcation_server = str('10.0.3.5' if os.getenv('GRPC_IP') == None else os.getenv('GRPC_IP'))
         self.communication_port = str('50051' if os.getenv('GRPC_PORT') == None else os.getenv('GRPC_PORT'))
 
         # File to read
@@ -40,7 +40,7 @@ class ApplicationConfiguration(metaclass=SingletonMeta):
         self.mysql_db = str('pouring' if os.getenv('MYSQL_DB') == None else os.getenv('MYSQL_DB'))
         
         # Sql Server Storage
-        self.sql_server_ip = str('localhost' if os.getenv('SQL_SERVER_IP') == None else os.getenv('SQL_SERVER_IP'))
+        self.sql_server_ip = str('10.0.1.5' if os.getenv('SQL_SERVER_IP') == None else os.getenv('SQL_SERVER_IP'))
         self.sql_server_port = int(1433 if os.getenv('SQL_SERVER_PORT') == None else os.getenv('SQL_SERVER_PORT'))
         self.sql_server_user = str('sa' if os.getenv('SQL_SERVER_USER') == None else os.getenv('SQL_SERVER_USER'))
         self.sql_server_pass = str('MUCSI_Deusto2022' if os.getenv('SQL_SERVER_PASS') == None else os.getenv('SQL_SERVER_PASS'))

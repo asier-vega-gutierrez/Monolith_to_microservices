@@ -123,14 +123,14 @@ module "jumpbox" {
 #   subnet_id = azurerm_subnet.db_subnet.id
 #   network_security_group_name = azurerm_network_security_group.db_nsg.name
 # }
-# module "extractors" {
-#   source = "./extractors"
-#   resource_group_name   = azurerm_resource_group.cloud_rg.name
-#   resource_group_location = azurerm_resource_group.cloud_rg.location
-#   virtual_network_name = azurerm_virtual_network.vn.name
-#   subnet_id = azurerm_subnet.extractors_subnet.id
-#   network_security_group_name = azurerm_network_security_group.extractors_nsg.name
-# }
+module "extractors" {
+  source = "./extractors"
+  resource_group_name   = azurerm_resource_group.cloud_rg.name
+  resource_group_location = azurerm_resource_group.cloud_rg.location
+  virtual_network_name = azurerm_virtual_network.vn.name
+  subnet_id = azurerm_subnet.extractors_subnet.id
+  network_security_group_name = azurerm_network_security_group.extractors_nsg.name
+}
 module "grpc" {
   source = "./grpc"
   resource_group_name   = azurerm_resource_group.cloud_rg.name

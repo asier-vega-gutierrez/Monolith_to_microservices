@@ -36,7 +36,7 @@ resource "azurerm_virtual_machine" "jumpbox-vm" {
   location              = var.resource_group_location
   resource_group_name   = var.resource_group_name
   network_interface_ids = [azurerm_network_interface.jumpbox_ni.id]
-  vm_size               = "Standard_B1s" 
+  vm_size               = "Standard_D2s_v3" 
   
   delete_os_disk_on_termination = true
   delete_data_disks_on_termination = true

@@ -7,8 +7,16 @@ all:
       ansible_host: 10.0.1.5
       ansible_user: adminasier
       ansible_ssh_private_key_file: /home/asier/ssh/azurekey
-    extractors:
-      ansible_host: 10.0.1.5
+    extractors_cq:
+      ansible_host: 10.0.2.5
+      ansible_user: adminasier
+      ansible_ssh_private_key_file: /home/asier/ssh/azurekey
+    extractors_mysql:
+      ansible_host: 10.0.2.6
+      ansible_user: adminasier
+      ansible_ssh_private_key_file: /home/asier/ssh/azurekey
+    extractors_sqls:
+      ansible_host: 10.0.2.7
       ansible_user: adminasier
       ansible_ssh_private_key_file: /home/asier/ssh/azurekey
     grpc:
@@ -16,4 +24,4 @@ all:
       ansible_user: adminasier
       ansible_ssh_private_key_file: /home/asier/ssh/azurekey
   vars:
-    ansible_ssh_common_args: '-o ProxyCommand="ssh -i /home/asier/ssh/azurekey -W %h:%p adminasier@40.68.97.76" -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    ansible_ssh_common_args: '-o ProxyCommand="ssh -i /home/asier/ssh/azurekey -W %h:%p adminasier@108.143.127.90" -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'

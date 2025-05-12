@@ -1,5 +1,5 @@
-- name: Create GRPC service
-  hosts: "grpc"
+- name: Create SQLS service
+  hosts: "extractors_sqls"
   become: true
 
   tasks:
@@ -17,27 +17,35 @@
   - name: install pip dependencies
     ansible.builtin.pip:
       name:
+          - pymysql
           - grpcio  
           - grpcio-tools
 
-  #Copy own files and start grpc services
+  #Copy own files and start qc services
   - name: mkdir repository src
     ansible.builtin.file:
-        path: /home/adminasier/src/grpc
+        path: /home/adminasier/src/sqls
         state: directory
   - name: copy src files
     ansible.builtin.copy:
-        src: /home/asier/cloud/MaquinasVirtuales/gRPC_Relay_Server/
-        dest: /home/adminasier/src/grpc/
+        src: /home/asier/cloud/MaquinasVirtuales/Extractors/SqlServerExtractor/
+        dest: /home/adminasier/src/sqls
         remote_src: no
   - name: Change permissions for python files
     ansible.builtin.command:
       cmd: sudo chmod -R 777 /home/adminasier/src/
   - name: mkdir logs 
     ansible.builtin.file:
-        path: /home/adminasier/src/logs/
+        path: /home/adminasier/logs/
         state: directory
+  - name: Touch a log file
+    ansible.builtin.file:
+      path: /home/adminasier/logs/SqlServerExtractor.txt
+      state: touch
+      mode: u=rw,g=rw,o=rw
+      
+  #Execute the script
   - name: execute python in background (shell)
-    ansible.builtin.shell: nohup python3 grpc/gRPC_Relay_Server_Topic.py > /dev/null 2>&1 &
+    ansible.builtin.shell: nohup python3 src/sqls/src/main.py --start > /dev/null 2>&1 &
     args:
-      chdir: /home/adminasier/src
+      chdir: /home/adminasier

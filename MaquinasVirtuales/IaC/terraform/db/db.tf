@@ -36,7 +36,7 @@ resource "azurerm_virtual_machine" "bd-vm" {
   location              = var.resource_group_location
   resource_group_name   = var.resource_group_name
   network_interface_ids = [azurerm_network_interface.db_ni.id]
-  vm_size               = "Standard_B2s" 
+  vm_size               = "Standard_D2s_v3" 
   
   delete_os_disk_on_termination = true
   delete_data_disks_on_termination = true
