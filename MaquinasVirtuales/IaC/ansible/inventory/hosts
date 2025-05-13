@@ -23,5 +23,13 @@ all:
       ansible_host: 10.0.3.5
       ansible_user: adminasier
       ansible_ssh_private_key_file: /home/asier/ssh/azurekey
+    dt:
+      ansible_host: 10.0.5.5
+      ansible_user: adminasier
+      ansible_ssh_private_key_file: /home/asier/ssh/azurekey
+    uvi:
+      ansible_host: 10.0.6.5
+      ansible_user: adminasier
+      ansible_ssh_private_key_file: /home/asier/ssh/azurekey
   vars:
-    ansible_ssh_common_args: '-o ProxyCommand="ssh -i /home/asier/ssh/azurekey -W %h:%p adminasier@108.143.127.90" -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    ansible_ssh_common_args: '-o ProxyCommand="ssh -i /home/asier/ssh/azurekey -W %h:%p adminasier@20.8.98.54" -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'

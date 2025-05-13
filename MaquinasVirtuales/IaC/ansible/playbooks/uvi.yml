@@ -1,0 +1,41 @@
+- name: Create UVI service
+  hosts: "uvi"
+  become: true
+
+  tasks:
+  # Setup dependencies
+  - name: install dependencies
+    apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+    loop:
+        - python3
+        - python3-pip
+    environment:
+      DEBIAN_FRONTEND: noninteractive
+  - name: install pip dependencies
+    ansible.builtin.pip:
+      name:
+          - fastapi
+          - uvicorn  
+
+  #Copy own files and start qc services
+  - name: mkdir repository src
+    ansible.builtin.file:
+        path: /home/adminasier/src/uvi
+        state: directory
+  - name: copy src files
+    ansible.builtin.copy:
+        src: /home/asier/cloud/MaquinasVirtuales/Transformation/Prediction/
+        dest: /home/adminasier/src/uvi
+        remote_src: no
+  - name: Change permissions for python files
+    ansible.builtin.command:
+      cmd: sudo chmod -R 777 /home/adminasier/src/
+      
+  #Execute the script
+  - name: execute python in background (shell)
+    ansible.builtin.shell: nohup python3 src/uvi/src/main.py --start > /dev/null 2>&1 &
+    args:
+      chdir: /home/adminasier

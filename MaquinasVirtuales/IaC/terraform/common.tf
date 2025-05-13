@@ -105,6 +105,44 @@ resource "azurerm_subnet_network_security_group_association" "grcp_nsg_associati
   network_security_group_id = azurerm_network_security_group.grcp_nsg.id
 }
 
+# Subnet for the uvi
+resource "azurerm_subnet" "uvi_subnet" {
+  name                 = "uvi_subnet"
+  resource_group_name  = azurerm_resource_group.cloud_rg.name
+  virtual_network_name = azurerm_virtual_network.vn.name
+  address_prefixes     = ["10.0.6.0/24"]
+}
+# Security group that cotains all network rules
+resource "azurerm_network_security_group" "uvi_nsg" {
+  name                = "uvi_nsg"
+  location            = azurerm_resource_group.cloud_rg.location
+  resource_group_name = azurerm_resource_group.cloud_rg.name
+}
+# Asociate subnet to network security group
+resource "azurerm_subnet_network_security_group_association" "uvi_nsg_association" {
+  subnet_id                 = azurerm_subnet.uvi_subnet.id
+  network_security_group_id = azurerm_network_security_group.uvi_nsg.id
+}
+
+# Subnet for the digital twin
+resource "azurerm_subnet" "dt_subnet" {
+  name                 = "dt_subnet"
+  resource_group_name  = azurerm_resource_group.cloud_rg.name
+  virtual_network_name = azurerm_virtual_network.vn.name
+  address_prefixes     = ["10.0.5.0/24"]
+}
+# Security group that cotains all network rules
+resource "azurerm_network_security_group" "dt_nsg" {
+  name                = "dt_nsg"
+  location            = azurerm_resource_group.cloud_rg.location
+  resource_group_name = azurerm_resource_group.cloud_rg.name
+}
+# Asociate subnet to network security group
+resource "azurerm_subnet_network_security_group_association" "dt_nsg_association" {
+  subnet_id                 = azurerm_subnet.dt_subnet.id
+  network_security_group_id = azurerm_network_security_group.dt_nsg.id
+}
+
 
 # Modules
 module "jumpbox" {
@@ -123,14 +161,14 @@ module "jumpbox" {
 #   subnet_id = azurerm_subnet.db_subnet.id
 #   network_security_group_name = azurerm_network_security_group.db_nsg.name
 # }
-module "extractors" {
-  source = "./extractors"
-  resource_group_name   = azurerm_resource_group.cloud_rg.name
-  resource_group_location = azurerm_resource_group.cloud_rg.location
-  virtual_network_name = azurerm_virtual_network.vn.name
-  subnet_id = azurerm_subnet.extractors_subnet.id
-  network_security_group_name = azurerm_network_security_group.extractors_nsg.name
-}
+# module "extractors" {
+#   source = "./extractors"
+#   resource_group_name   = azurerm_resource_group.cloud_rg.name
+#   resource_group_location = azurerm_resource_group.cloud_rg.location
+#   virtual_network_name = azurerm_virtual_network.vn.name
+#   subnet_id = azurerm_subnet.extractors_subnet.id
+#   network_security_group_name = azurerm_network_security_group.extractors_nsg.name
+# }
 module "grpc" {
   source = "./grpc"
   resource_group_name   = azurerm_resource_group.cloud_rg.name
@@ -139,4 +177,21 @@ module "grpc" {
   subnet_id = azurerm_subnet.grcp_subnet.id
   network_security_group_name = azurerm_network_security_group.grcp_nsg.name
 }
+module "uvi" {
+  source = "./uvi"
+  resource_group_name   = azurerm_resource_group.cloud_rg.name
+  resource_group_location = azurerm_resource_group.cloud_rg.location
+  virtual_network_name = azurerm_virtual_network.vn.name
+  subnet_id = azurerm_subnet.uvi_subnet.id
+  network_security_group_name = azurerm_network_security_group.uvi_nsg.name
+}
+module "dt" {
+  source = "./dt"
+  resource_group_name   = azurerm_resource_group.cloud_rg.name
+  resource_group_location = azurerm_resource_group.cloud_rg.location
+  virtual_network_name = azurerm_virtual_network.vn.name
+  subnet_id = azurerm_subnet.dt_subnet.id
+  network_security_group_name = azurerm_network_security_group.dt_nsg.name
+}
+
 
