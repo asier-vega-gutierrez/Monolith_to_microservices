@@ -1,0 +1,95 @@
+- name: Create POSTGRESS service
+  hosts: "post"
+  become: true
+
+  vars:
+    conda_env_name: myenv  # Change this to your actual conda environment name
+    conda_prefix: /opt/miniconda3
+    conda_sh: /opt/miniconda3/etc/profile.d/conda.sh
+
+  tasks:
+  # Setup dependencies
+  - name: install dependencies
+    apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+    loop:
+        - python3
+        - python3-pip
+    environment:
+      DEBIAN_FRONTEND: noninteractive
+  # Install conda
+  - name: Download Miniconda
+    get_url:
+      url: https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+      dest: /tmp/install-miniconda.sh
+      mode: 0550
+  - name: Run the Miniconda installer
+    shell: /tmp/install-miniconda.sh -b -u -p {{ conda_prefix }}
+    args:
+      creates: "{{ conda_prefix }}/bin/conda"
+  - name: Remove the installer
+    file:
+      state: absent
+      path: /tmp/install-miniconda.sh
+  # Ensure conda is executable
+  - name: Ensure conda is executable
+    file:
+      path: "{{ conda_prefix }}/bin/conda"
+      mode: '0755'
+  # Create conda environment if not exists
+  - name: Create conda environment
+    shell: |
+      source {{ conda_sh }}
+      conda create -y -n {{ conda_env_name }} python=3.10
+    args:
+      executable: /bin/bash
+      creates: "{{ conda_prefix }}/envs/{{ conda_env_name }}"
+  - name: Install psycopg2 using conda
+    ansible.builtin.shell: |
+      source {{ conda_sh }}
+      conda activate {{ conda_env_name }}
+      conda install -y -c conda-forge psycopg2
+    args:
+      executable: /bin/bash
+  - name: install pip dependencies in conda env
+    ansible.builtin.shell: |
+      source {{ conda_sh }}
+      conda activate {{ conda_env_name }}
+      pip install grpcio grpcio-tools
+    args:
+      executable: /bin/bash
+
+  #Copy own files and start service
+  - name: mkdir repository src
+    ansible.builtin.file:
+        path: /home/adminasier/src/post
+        state: directory
+  - name: copy src files
+    ansible.builtin.copy:
+        src: /home/asier/cloud/MaquinasVirtuales/Loaders/PostgresLoader/
+        dest: /home/adminasier/src/post
+        remote_src: no
+  - name: Change permissions for python files
+    ansible.builtin.command:
+      cmd: sudo chmod -R 777 /home/adminasier/src/
+  - name: mkdir logs 
+    ansible.builtin.file:
+        path: /home/adminasier/logs/
+        state: directory
+  - name: Touch a log file
+    ansible.builtin.file:
+      path: /home/adminasier/logs/PostgresLoader.txt
+      state: touch
+      mode: u=rw,g=rw,o=rw
+      
+  #Execute the script
+  - name: execute python in background (shell) in conda env
+    ansible.builtin.shell: |
+      source {{ conda_sh }}
+      conda activate {{ conda_env_name }}
+      nohup python3 src/post/src/main.py --start > /dev/null 2>&1 &
+    args:
+      chdir: /home/adminasier
+      executable: /bin/bash

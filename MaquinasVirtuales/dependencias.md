@@ -1,7 +1,6 @@
-pip install influxdb_client
 
-conda install conda-forge::pymssql
-pip install kafka-python
+
+
 
 
 EN WSL
@@ -34,3 +33,11 @@ pip install fastapi uvicorn
 pip install httpx
 pip install grpcio  
 pip install grpcio-tools
+
+# Para el servicio de influx
+pip install influxdb_client
+pip install grpcio  
+pip install grpcio-tools
+
+# Para el servicio de postgres
+conda install conda-forge psycopg2
