@@ -1,8 +1,16 @@
+__pycache__/
+.*
+
+Contenedores/DB/Repositorios/storage/
+Contenedores/docker_tests/
+
 MaquinasVirtuales/DB/Repositorios/storage/
+MaquinasVirtuales/IaC/terraform/.terraform/
+
 Microservicios/DB/Repositorios/storage/
 Microservicios/logs/
-Monolitico/DB/Repositorios/storage/
 Microservicios/docker-kafka/kafka-storage/
 
-__pycache__/
-MaquinasVirtuales/IaC/terraform/.terraform/
+Monolitico/DB/Repositorios/storage/
+
+

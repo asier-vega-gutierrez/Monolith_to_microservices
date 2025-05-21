@@ -1,0 +1,280 @@
+
+version: "3"
+networks:
+  cloud-network:
+    driver: bridge
+services:
+
+# # Kafka services
+#   zookeeper:
+#     restart: always
+#     container_name: zookeeper
+#     image: confluentinc/cp-zookeeper:latest
+#     ports:
+#       - ?
+#     environment:
+#       ?
+#     volumes:
+#       ?
+#     networks:
+#       - cloud-network  
+#   kafka:
+#     restart: always
+#     container_name: kafka
+#     image: confluentinc/cp-kafka:latest
+#     ports:
+#       ?
+#     environment:
+#       ?
+#     volumes:
+#       ?
+#     networks:
+#       - cloud-network
+#     depends_on:
+#       - zookeeper
+#     healthcheck:
+#       test: ["CMD-SHELL", "kafka-topics --bootstrap-server 127.0.0.1:9092 --topic healthcheck --describe"]
+#       interval: 15s
+#       timeout: 10s
+#       retries: 10
+#   kafdrop:
+#     restart: always
+#     container_name: kafdrop
+#     platform: linux/amd64 # Needed for running in Mac Silicon (remember to activate Roseta emulation in settings - Docker)
+#     image: obsidiandynamics/kafdrop:latest  
+#     ports:
+#       ?
+#     environment:
+#       ?
+#     networks:
+#       - cloud-network
+#     depends_on:
+#       zookeeper:
+#         condition: service_started
+#       kafka:
+#         condition: service_started
+
+# DB services
+  mysql-input:       
+    restart: always
+    image: mysql:8.1
+    container_name: mysql-input
+    environment:
+      MYSQL_ROOT_PASSWORD: MUCSI_Deusto2022
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: MUCSI_Deusto2022
+    ports:
+      - 3306:3306
+    volumes:
+      - ./DB/Repositorios/Storage/MySql_Input/data/db:/var/lib/mysql
+      - ./DB/Repositorios/Storage/MySql_Input/all_databases_dump.sql:/docker-entrypoint-initdb.d/all_databases_dump.sql:ro
+    networks:
+      - cloud-network
+  sqlserver-input:  
+    restart: always  
+    container_name: sqlserver-input
+    image: mcr.microsoft.com/azure-sql-edge
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: MUCSI_Deusto2022
+      MSSQL_PID: Developer
+    volumes:
+      - ./DB/Repositorios/Storage/azure-sql-edge/data:/var/opt/mssql/data 
+      - ./DB/Repositorios/Storage/azure-sql-edge/log:/var/opt/mssql/log 
+      - ./DB/Repositorios/Storage/azure-sql-edge/secrets:/var/opt/mssql/secrets 
+    networks:
+      - cloud-network
+  postgres-output:
+    restart: always
+    container_name: postgres-output
+    image: 'postgres:15' 
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=MUCSI_Deusto2022
+      - POSTGRES_DB=Foundry_Relational_Storage
+    volumes:
+      - './DB/Repositorios/Storage/Relational_Output/data:/var/lib/postgresql/data'
+    networks:
+      - cloud-network
+  influxdb-output:
+      restart: always
+      container_name: influxdb-output      
+      image: 'influxdb:latest'
+      ports:
+        - 8086:8086
+      environment:
+        - DOCKER_INFLUXDB_INIT_MODE=setup # first time configure all
+        - DOCKER_INFLUXDB_INIT_USERNAME=root 
+        - DOCKER_INFLUXDB_INIT_PASSWORD=MUCSI_Deusto2022 
+        - DOCKER_INFLUXDB_INIT_ORG=Deusto 
+        - DOCKER_INFLUXDB_INIT_BUCKET=cloud-bucket 
+        - DOCKER_INFLUXDB_INIT_RETENTION=1w 
+      volumes:
+        - './DB/Repositorios/Storage/influxdb2/data:/var/lib/influxdb2'
+        - './DB/Repositorios/Storage/influxdb2/config:/etc/influxdb2'
+      networks:
+        - cloud-network
+  
+# PD Agents Services
+  pdagent-mysql-input:
+    restart: always
+    container_name: pdagent-mysql-input
+    image: pdagent_mysql:0.1
+    environment:
+      - MYSQL_ROOT_PASSWORD=MUCSI_Deusto2022 
+      - MYSQL_DATABASE=app_db 
+      - MYSQL_USER=root 
+      - MYSQL_PASSWORD=MUCSI_Deusto2022 
+    networks:
+      - cloud-network
+    # depends_on:
+    #   zookeeper:
+    #     condition: service_started
+    #   kafka:
+    #     condition: service_started
+    #   mysql-input:
+    #     condition: service_started
+  pdagent-file-input:
+    restart: always
+    container_name: pdagent-file-input
+    image: pdagent_file:0.1
+    volumes:
+      - './DB/Repositorios/Storage/File_Input/data:/usr/src/app/cqfile'
+    environment:
+      - KAFKA_BROKER_IP=kafka  
+      - KAFKA_BROKER_PORT=9092 
+      - KAFKA_CHEMICAL_COMPOSITION_TOPIC=chemical_composition_file 
+      - COMPOSITION_FILE_PATH=/usr/src/app/cqfile/cq.csv 
+    networks:
+      - cloud-network
+    # depends_on:
+    #   - kafka
+    #   - zookeeper
+  # pdagent-mssql-input:
+  #   restart: always
+  #   container_name: pdagent-mssql-input
+  #   platform: linux/amd64 # Needed for running in Mac Silicon (remember to activate Roseta emulation in settings - Docker)
+  #   build: ?
+  #   image: pdagent_sqlserver:0.2
+  #   environment:
+  #     ?
+  #   networks:
+  #     - cloud-network
+  #   depends_on:
+  #     - kafka
+  #     - zookeeper
+  #     - sqlserver-input
+#   # Intelligent Services (predictions, clasificacion or regresions)
+#   cooling-drum-water-predictor:
+#     restart: always
+#     container_name: cooling-drum-water-predictor
+#     build: ?
+#     image: cooling_drum_water_predictor:0.2
+#     ports:
+#       ?
+#     volumes:
+#       ?
+#     networks:
+#       - cloud-network
+#   belts-water-factor-predictor:
+#     restart: always
+#     container_name: belts-water-factor-predictor
+#     build: ?
+#     image: belts_water_predictor:0.2
+#     ports:
+#       ?
+#     volumes:
+#       ?
+#     networks:
+#       - cloud-network
+  
+#   # Digital Twins for Water Addition
+#   l1-cooling-drum-digital-twin:
+#     restart: always
+#     container_name: l1-cooling-drum-digital-twin
+#     build: ?
+#     image: water_addition_digital_twin:0.2    
+#     networks:
+#       - cloud-network
+#     environment:
+#       ?
+#     volumes:
+#       ?
+#     depends_on:
+#       - kafka
+#       - zookeeper
+#       - cooling-drum-water-predictor
+#   l2-cooling-drum-digital-twin:
+#     restart: always
+#     container_name: l2-cooling-drum-digital-twin
+#     build: ?
+#     image: water_addition_digital_twin:0.2    
+#     networks:
+#       - cloud-network
+#     environment:
+#       ?
+#     volumes:
+#       ?
+#     depends_on:
+#       - kafka
+#       - zookeeper
+#       - cooling-drum-water-predictor
+#   tapes-digital-twin:
+#     restart: always
+#     container_name: tapes-digital-twin
+#     build: ?
+#     image: water_addition_digital_twin:0.2    
+#     networks:
+#       - cloud-network
+#     environment:
+#       ?
+#     volumes:
+#       ?
+#     depends_on:
+#       - kafka
+#       - zookeeper
+#       - l1-cooling-drum-digital-twin
+#       - l2-cooling-drum-digital-twin
+#       - belts-water-factor-predictor
+#   pdagent-relational-output:
+#     restart: always
+#     container_name: pdagent-relational-output
+#     build: ?
+#     image: pdagent_relational_storage:0.2
+#     networks:
+#       - cloud-network
+#     environment:
+#       ?
+#     volumes:
+#       ?
+#     depends_on:
+#       - kafka
+#       - zookeeper
+#       - l1-cooling-drum-digital-twin
+#       - l2-cooling-drum-digital-twin
+#       - belts-water-factor-predictor
+#       - pdagent-mssql-input
+#       - pdagent-file-input
+#       - postgres-output
+#   pdagent-temporal-serie-output:
+#     restart: always
+#     container_name: pdagent-temporal-serie-output
+#     build: ?
+#     image: pdagent_temporal_serie:0.2
+#     environment:
+#       ?
+#     volumes:
+#       ?
+#     networks:
+#       - cloud-network
+#     depends_on:
+#       - kafka
+#       - zookeeper    
+#       - influxdb-output  
+
+
+  
