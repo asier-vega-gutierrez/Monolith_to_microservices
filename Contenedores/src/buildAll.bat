@@ -14,7 +14,7 @@ REM docker pull grafana/grafana-enterprise
 REM Build our own images
 docker build -t pdagent_mysql:0.1 ./PDAgents/PDAgent_MySqlReader
 docker build -t pdagent_file:0.1 ./PDAgents/PDAgent_FileReader
-REM docker build -t pdagent_sqlserver:0.1 ./PDAgents/PDAgent_SqlServerReader
+docker build -t pdagent_sqlserver:0.1 ./PDAgents/PDAgent_SqlServerReader
 REM docker build -t water_addition_digital_twin:0.1 ./Digital_Twin
 REM docker build -t pdagent_relational_storage:0.1 ./PDAgents/PDAgent_RelationDBWriter
 REM docker build -t pdagent_temporal_serie:0.1 ./PDAgents/PDAgent_TemporalSeriesWriter

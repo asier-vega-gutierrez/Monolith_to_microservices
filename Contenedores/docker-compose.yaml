@@ -5,54 +5,68 @@ networks:
     driver: bridge
 services:
 
-# # Kafka services
-#   zookeeper:
-#     restart: always
-#     container_name: zookeeper
-#     image: confluentinc/cp-zookeeper:latest
-#     ports:
-#       - ?
-#     environment:
-#       ?
-#     volumes:
-#       ?
-#     networks:
-#       - cloud-network  
-#   kafka:
-#     restart: always
-#     container_name: kafka
-#     image: confluentinc/cp-kafka:latest
-#     ports:
-#       ?
-#     environment:
-#       ?
-#     volumes:
-#       ?
-#     networks:
-#       - cloud-network
-#     depends_on:
-#       - zookeeper
-#     healthcheck:
-#       test: ["CMD-SHELL", "kafka-topics --bootstrap-server 127.0.0.1:9092 --topic healthcheck --describe"]
-#       interval: 15s
-#       timeout: 10s
-#       retries: 10
-#   kafdrop:
-#     restart: always
-#     container_name: kafdrop
-#     platform: linux/amd64 # Needed for running in Mac Silicon (remember to activate Roseta emulation in settings - Docker)
-#     image: obsidiandynamics/kafdrop:latest  
-#     ports:
-#       ?
-#     environment:
-#       ?
-#     networks:
-#       - cloud-network
-#     depends_on:
-#       zookeeper:
-#         condition: service_started
-#       kafka:
-#         condition: service_started
+# Kafka services
+  zookeeper:
+    restart: always
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - 2181:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181 
+      ZOOKEEPER_TICK_TIME: 2000 
+    volumes:
+      - './Kafka/kafka-storage/zookeeper/data:/var/lib/zookeeper/data' 
+      - './Kafka/kafka-storage/zookeeper/log:/var/lib/zookeeper/log'
+    networks:
+      - cloud-network  
+  kafka:
+    restart: always
+    container_name: kafka
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - 22181:2181 
+    environment:
+      KAFKA_BROKER_ID: 1       
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 
+      KAFKA_LISTENERS: EXTERNAL_SAME_HOST://:29092,EXTERNAL_DIFFERENT_HOST://:29093,INTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL_SAME_HOST://localhost:29092,EXTERNAL_DIFFERENT_HOST://192.168.5.242:29093 # Change last ip by the server (core) ip 
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT,EXTERNAL_DIFFERENT_HOST:PLAINTEXT 
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL 
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1       
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0 
+      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1 
+      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1 
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1 
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1 
+    volumes:
+      - './Kafka/kafka-storage/kafka/data:/var/lib/kafka/data' 
+      - './Kafka/kafka-storage/kafka/secrets:/etc/kafka/secrets'
+    networks:
+      - cloud-network
+    depends_on:
+      - zookeeper
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-topics --bootstrap-server 127.0.0.1:9092 --topic healthcheck --describe"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+  kafdrop:
+    restart: always
+    container_name: kafdrop
+    platform: linux/amd64 # Needed for running in Mac Silicon (remember to activate Roseta emulation in settings - Docker)
+    image: obsidiandynamics/kafdrop:latest  
+    ports:
+      - 9000:9000 
+    environment:
+      KAFKA_BROKERCONNECT: kafka:9092 
+    networks:
+      - cloud-network
+    depends_on:
+      zookeeper:
+        condition: service_started
+      kafka:
+        condition: service_started
 
 # DB services
   mysql-input:       
@@ -125,19 +139,22 @@ services:
     container_name: pdagent-mysql-input
     image: pdagent_mysql:0.1
     environment:
+      - KAFKA_BROKER_IP=kafka 
+      - KAFKA_BROKER_PORT=9092
+      - KAFKA_MYSQL_PROCESS_TOPIC=pouring_mysql
       - MYSQL_ROOT_PASSWORD=MUCSI_Deusto2022 
       - MYSQL_DATABASE=app_db 
       - MYSQL_USER=root 
       - MYSQL_PASSWORD=MUCSI_Deusto2022 
     networks:
       - cloud-network
-    # depends_on:
-    #   zookeeper:
-    #     condition: service_started
-    #   kafka:
-    #     condition: service_started
-    #   mysql-input:
-    #     condition: service_started
+    depends_on:
+      zookeeper:
+        condition: service_started
+      kafka:
+        condition: service_started
+      mysql-input:
+        condition: service_started
   pdagent-file-input:
     restart: always
     container_name: pdagent-file-input
@@ -151,23 +168,31 @@ services:
       - COMPOSITION_FILE_PATH=/usr/src/app/cqfile/cq.csv 
     networks:
       - cloud-network
-    # depends_on:
-    #   - kafka
-    #   - zookeeper
-  # pdagent-mssql-input:
-  #   restart: always
-  #   container_name: pdagent-mssql-input
-  #   platform: linux/amd64 # Needed for running in Mac Silicon (remember to activate Roseta emulation in settings - Docker)
-  #   build: ?
-  #   image: pdagent_sqlserver:0.2
-  #   environment:
-  #     ?
-  #   networks:
-  #     - cloud-network
-  #   depends_on:
-  #     - kafka
-  #     - zookeeper
-  #     - sqlserver-input
+    depends_on:
+      - kafka
+      - zookeeper
+  pdagent-sqlserver-input:
+    restart: always
+    container_name: pdagent-sqlserver-input
+    platform: linux/amd64 # Needed for running in Mac Silicon (remember to activate Roseta emulation in settings - Docker)
+    image: pdagent_sqlserver:0.1
+    environment:
+      - KAFKA_BROKER_IP=kafka 
+      - KAFKA_BROKER_PORT=9092
+      - KAFKA_MOULD_DATA_TOPIC=mould_data
+      - KAFKA_SENSOR_DATA_TOPIC=sensor_data
+      - SQL_SERVER_IP=sqlserver-input
+      - SQL_SERVER_PORT=1433
+      - SQL_SERVER_USER=sa
+      - SQL_SERVER_PASS=MUCSI_Deusto2022
+      - SQL_SERVER_MOULD_DB=DB-MOULDING
+      - SQL_SERVER_SENSOR_DB=DB-SENSORS
+    networks:
+      - cloud-network
+    depends_on:
+      - kafka
+      - zookeeper
+      - sqlserver-input
 #   # Intelligent Services (predictions, clasificacion or regresions)
 #   cooling-drum-water-predictor:
 #     restart: always
