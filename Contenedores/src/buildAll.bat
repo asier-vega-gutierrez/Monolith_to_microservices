@@ -15,10 +15,12 @@ REM Build our own images
 docker build -t pdagent_mysql:0.1 ./PDAgents/PDAgent_MySqlReader
 docker build -t pdagent_file:0.1 ./PDAgents/PDAgent_FileReader
 docker build -t pdagent_sqlserver:0.1 ./PDAgents/PDAgent_SqlServerReader
-REM docker build -t water_addition_digital_twin:0.1 ./Digital_Twin
+docker build -t digital_twin_l1:0.1 ./Digital_Twin/l1-cooling-drum-digital-twin
+docker build -t digital_twin_l2:0.1 ./Digital_Twin/l2-cooling-drum-digital-twin
+docker build -t digital_twin_tapes:0.1 ./Digital_Twin/tapes-digital-twin
 REM docker build -t pdagent_relational_storage:0.1 ./PDAgents/PDAgent_RelationDBWriter
 REM docker build -t pdagent_temporal_serie:0.1 ./PDAgents/PDAgent_TemporalSeriesWriter
 
 REM Build API Rest Images with names: cooling_drum_water_predictor:0.1 and belts_water_predictor:0.1
-REM docker build ...
-REM docker build ...
+docker build -t cooling_drum_water_predictor:0.1 ./Predictions/CoolingDrumWaterAddition
+docker build -t belts_water_predictor:0.1 ./Predictions/BeltsWaterAdditionFactor

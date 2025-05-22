@@ -1,25 +1,32 @@
 from fastapi import FastAPI
+import uvicorn
+from cooling_drum_water_addition import calculate_water_adittion_liters
+import logging
+from argparse import ArgumentParser
+
+def main():
+    parser = ArgumentParser(description="Api Script")
+    parser.add_argument("--start", action="store_true", help="Start process")
+
+    args = parser.parse_args()
+
+    if args.start:
+        #Ejecuta uvicor al iniciar 
+        uvicorn.run("main:app", host="0.0.0.0", port=80, reload=False)
 
 app = FastAPI()
 
-@app.get("/cooling-drum-water-prediction")
-def calculate_water_adittion_liters(
-                                    f_avg : float,
-                                    q_sand_avg : float,
-                                    q_metal_avg : float
-                                ):
+#Metodo get para cada una de las tres unidades de calculo
+@app.get("/calculate_water_adittion_liters/")
+def api_calculate_single_tape_addition(f_avg: float, q_sand_avg: float, q_metal_avg: float):
+    result = calculate_water_adittion_liters(f_avg, q_sand_avg, q_metal_avg)
+    return {"result": result}
 
-    previous_value_1 = 3.75 * q_sand_avg
-    previous_value_2 = (0.41666667 * q_sand_avg) + 6.66666667
-    previous_value_3 = (-0.625 * q_sand_avg) + 15
-    
-    principal_equation = ((11.75847 * q_metal_avg) + (0.1734216 * q_sand_avg) - 6.843978);
-            
-    if q_sand_avg >= 8 and principal_equation < previous_value_3:
-        return f_avg * previous_value_3
-    elif q_sand_avg >= 2 and q_sand_avg < 8 and principal_equation < previous_value_2:
-        return f_avg * previous_value_2
-    elif q_sand_avg < 2 and principal_equation < previous_value_1:
-        return f_avg * previous_value_1;
-    else:
-        return f_avg * principal_equation * 1.05;
+
+if __name__ == "__main__":
+    main()
+
+'''
+#Para realizar llamadas desde la url
+http://localhost:8080/calculate_water_adittion_liters/?f_avg=1.5&q_sand_avg=2.0&q_metal_avg=3.0
+'''

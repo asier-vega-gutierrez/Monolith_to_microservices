@@ -1,18 +1,18 @@
 # Select the base image with the minimum space
-FROM <select_image>
+FROM python:3.13-alpine
 
 # Define the work dir
-WORKDIR /code
+WORKDIR /usr/src/app
 
 # Define ENV variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Copy requirements to code/requiremets.txt
-# RUN pip install upgrade and pip install
-<enter code here>
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-COPY ./src /code/app
-
-# Run CMD command as array for launching fast api
-CMD ["<comand>", "<param>", "<param"...]
+# Copy and launch the code
+COPY ./src .
+ENTRYPOINT ["python", "main.py", "--start"]

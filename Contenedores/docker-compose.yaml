@@ -194,77 +194,108 @@ services:
       - zookeeper
       - sqlserver-input
 #   # Intelligent Services (predictions, clasificacion or regresions)
-#   cooling-drum-water-predictor:
-#     restart: always
-#     container_name: cooling-drum-water-predictor
-#     build: ?
-#     image: cooling_drum_water_predictor:0.2
-#     ports:
-#       ?
-#     volumes:
-#       ?
-#     networks:
-#       - cloud-network
-#   belts-water-factor-predictor:
-#     restart: always
-#     container_name: belts-water-factor-predictor
-#     build: ?
-#     image: belts_water_predictor:0.2
-#     ports:
-#       ?
-#     volumes:
-#       ?
-#     networks:
-#       - cloud-network
+  cooling-drum-water-predictor:
+    restart: always
+    container_name: cooling-drum-water-predictor
+    image: cooling_drum_water_predictor:0.1
+    ports:
+      - 8080:80
+    networks:
+      - cloud-network
+  belts-water-factor-predictor:
+    restart: always
+    container_name: belts-water-factor-predictor
+    image: belts_water_predictor:0.1
+    ports:
+      - 8090:80 
+    networks:
+      - cloud-network
   
-#   # Digital Twins for Water Addition
-#   l1-cooling-drum-digital-twin:
-#     restart: always
-#     container_name: l1-cooling-drum-digital-twin
-#     build: ?
-#     image: water_addition_digital_twin:0.2    
-#     networks:
-#       - cloud-network
-#     environment:
-#       ?
-#     volumes:
-#       ?
-#     depends_on:
-#       - kafka
-#       - zookeeper
-#       - cooling-drum-water-predictor
-#   l2-cooling-drum-digital-twin:
-#     restart: always
-#     container_name: l2-cooling-drum-digital-twin
-#     build: ?
-#     image: water_addition_digital_twin:0.2    
-#     networks:
-#       - cloud-network
-#     environment:
-#       ?
-#     volumes:
-#       ?
-#     depends_on:
-#       - kafka
-#       - zookeeper
-#       - cooling-drum-water-predictor
-#   tapes-digital-twin:
-#     restart: always
-#     container_name: tapes-digital-twin
-#     build: ?
-#     image: water_addition_digital_twin:0.2    
-#     networks:
-#       - cloud-network
-#     environment:
-#       ?
-#     volumes:
-#       ?
-#     depends_on:
-#       - kafka
-#       - zookeeper
-#       - l1-cooling-drum-digital-twin
-#       - l2-cooling-drum-digital-twin
-#       - belts-water-factor-predictor
+# Digital Twins for Water Addition
+  l1-cooling-drum-digital-twin:
+    restart: always
+    container_name: l1-cooling-drum-digital-twin
+    image: digital_twin_l1:0.1   
+    networks:
+      - cloud-network
+    environment:
+      - DT_LINE=1 
+      - DT_MOULD_SIZE=20 
+      - DT_MOULDS_TO_CALCULATE=7 
+      - DT_TYPE=DRUM 
+      - KAFKA_CLIENT_ID=WaterAddition-DigitalTwin-L1-cooling-drum 
+      - KAFKA_GROUP_ID=Digital-Twin-Group-l1-cooling-drum 
+      - KAFKA_BROKER_IP=kafka 
+      - KAFKA_BROKER_PORT=9092 
+      - KAFKA_MOULD_FOR_BELTS_TOPIC=mould_for_belts 
+      - KAFKA_PREDICTION_UNIFIED_BELTS_TOPIC=water_prediction_unified_belts 
+      - KAFKA_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum 
+      - KAFKA_MOULD_DATA_TOPIC=mould_data 
+      - KAFKA_SENSOR_DATA_TOPIC=sensor_data 
+      - COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/cooling-drum-water-prediction 
+      - BELTS_API_BASE=http://belts-water-factor-predictor:80/unified_belt_prediction 
+    depends_on:
+      - kafka
+      - zookeeper
+      - cooling-drum-water-predictor
+  l2-cooling-drum-digital-twin:
+    restart: always
+    container_name: l2-cooling-drum-digital-twin
+    image: digital_twin_l2:0.1   
+    networks:
+      - cloud-network
+    environment:
+      - DT_LINE=2 
+      - DT_MOULD_SIZE=30 
+      - DT_MOULDS_TO_CALCULATE=10 
+      - DT_TYPE=DRUM 
+      - KAFKA_CLIENT_ID=WaterAddition-DigitalTwin-L2-cooling-drum 
+      - KAFKA_GROUP_ID=Digital-Twin-Group-l2-cooling-drum 
+      - KAFKA_BROKER_IP=kafka 
+      - KAFKA_BROKER_PORT=9092 
+      - KAFKA_MOULD_FOR_BELTS_TOPIC=mould_for_belts 
+      - KAFKA_PREDICTION_UNIFIED_BELTS_TOPIC=water_prediction_unified_belts 
+      - KAFKA_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum 
+      - KAFKA_MOULD_DATA_TOPIC=mould_data 
+      - KAFKA_SENSOR_DATA_TOPIC=sensor_data 
+      - COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/cooling-drum-water-prediction 
+      - BELTS_API_BASE=http://belts-water-factor-predictor:80/unified_belt_prediction
+    depends_on:
+      - kafka
+      - zookeeper
+      - cooling-drum-water-predictor
+  tapes-digital-twin:
+    restart: always
+    container_name: tapes-digital-twin
+    image: digital_twin_tapes:0.1   
+    networks:
+      - cloud-network
+    environment:
+      - DT_LINE=1 
+      - DT_MOULD_SIZE=30 
+      - DT_MOULDS_TO_CALCULATE=15 
+      - DT_TYPE=TAPES 
+      - KAFKA_CLIENT_ID=WaterAddition-DigitalTwin-tapes 
+      - KAFKA_GROUP_ID=Digital-Twin-Group-tapes 
+      - KAFKA_BROKER_IP=kafka 
+      - KAFKA_BROKER_PORT=9092 
+      - KAFKA_MOULD_FOR_BELTS_TOPIC=mould_for_belts 
+      - KAFKA_PREDICTION_UNIFIED_BELTS_TOPIC=water_prediction_unified_belts 
+      - KAFKA_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum 
+      - KAFKA_MOULD_DATA_TOPIC=mould_data 
+      - KAFKA_SENSOR_DATA_TOPIC=sensor_data 
+      - COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/cooling-drum-water-prediction 
+      - BELTS_API_BASE=http://belts-water-factor-predictor:80/unified_belt_prediction
+    depends_on:
+      - kafka
+      - zookeeper
+      - l1-cooling-drum-digital-twin
+      - l2-cooling-drum-digital-twin
+      - belts-water-factor-predictor
+
+
+
+
 #   pdagent-relational-output:
 #     restart: always
 #     container_name: pdagent-relational-output
@@ -302,4 +333,3 @@ services:
 #       - influxdb-output  
 
 
-  

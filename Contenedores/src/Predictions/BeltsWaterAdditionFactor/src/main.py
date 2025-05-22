@@ -1,39 +1,40 @@
 from fastapi import FastAPI
-import random
+import uvicorn
+from belts_water_addition_factor import calculate_single_tape_addition, calculate_unified_belt_addition
+import logging
+from argparse import ArgumentParser
+
+def main():
+    parser = ArgumentParser(description="Api Script")
+    parser.add_argument("--start", action="store_true", help="Start process")
+
+    args = parser.parse_args()
+
+    if args.start:
+        #Ejecuta uvicor al iniciar 
+        uvicorn.run("main:app", host="0.0.0.0", port=80, reload=False)
 
 app = FastAPI()
 
-@app.get("/single_belt_prediction")
-def calculate_single_tape_adittion(
-                                    q_sand_avg : float,
-                                    temperature_avg : float
-                                ):
+#Metodo get para cada una de las tres unidades de calculo
+@app.get("/calculate_single_tape_addition/")
+def api_calculate_single_tape_addition(q_sand_avg: float, temperature_avg: float):
+    result = calculate_single_tape_addition(q_sand_avg, temperature_avg)
+    return {"result": result}
 
-    random_value = random.uniform(1.5, 4.5)
-    return ( random_value * (00.65445 * q_sand_avg)) * (0.15 * temperature_avg)
+#Metodo get para cada una de las tres unidades de calculo
+@app.get("/calculate_unified_belt_addition/")
+def api_calculate_unified_belt_addition(q_sand_average: float, temp_average: float, humidity: float):
+    result = calculate_unified_belt_addition(q_sand_average, temp_average, humidity)
+    return {"result": result}
 
 
-@app.get("/unified_belt_prediction")
-def calculate_unified_belt_adittion(
-                                        q_sand_average : float, 
-                                        temp_average : float, 
-                                        humidity : float
-                                ):
+if __name__ == "__main__":
+    main()
 
-    value = 0.0000673 * (q_sand_average ** 2) + 0.0069627 * temp_average + -0.1936083;
+'''
+#Para realizar llamadas desde la url
+http://localhost:8090/calculate_single_tape_addition/?q_sand_avg=10&temperature_avg=10
 
-    # We adjust the value using the humidity
-    if humidity < 1.7:
-        corrected_value = value
-    elif humidity >= 1.7 and humidity < 1.8:
-        corrected_value = value - 0.03
-    elif humidity >= 1.8 and humidity < 2:
-        corrected_value = value - 0.06;
-    else:
-        corrected_value = value - 0.09;
-
-    # We make some checks before using this information
-    corrected_value = 0 if corrected_value < 0 else corrected_value
-    corrected_value = 1 if corrected_value > 1 else corrected_value;
-
-    return corrected_value;
+http://localhost:8090/calculate_unified_belt_addition/?q_sand_average=10&temp_average=10&humidity=10
+'''

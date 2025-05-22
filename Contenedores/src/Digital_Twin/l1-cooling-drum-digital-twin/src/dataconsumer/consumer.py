@@ -68,7 +68,7 @@ class MUCSIConsumer():
         """ Method that makes the resubscription to the topics """
 
         self._consumer.unsubscribe()
-        self._consumer.subscribe(topics=self._subscribers.keys())
+        self._consumer.subscribe(topics=list(self._subscribers.keys()))
 
     def start_listening_messages(self):
         """ Method to start receiving messages """
