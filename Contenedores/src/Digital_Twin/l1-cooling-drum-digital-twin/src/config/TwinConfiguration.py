@@ -42,8 +42,8 @@ class WaterAdditionConfiguration(metaclass=SingletonMeta):
         self.kafka_sensor_data_topic = str('sensor_data' if os.getenv('KAFKA_SENSOR_DATA_TOPIC') == None else os.getenv('KAFKA_SENSOR_DATA_TOPIC'))
 
         # API Rest URLs        
-        self.cooling_drum_predictor_api_url_base = str('http://localhost:8080/cooling-drum-water-prediction' if os.getenv('COOLING_DRUM_API_BASE') == None else os.getenv('COOLING_DRUM_API_BASE'))
-        self.belts_predictor_api_url_base = str('http://localhost:8090/unified_belt_prediction' if os.getenv('BELTS_API_BASE') == None else os.getenv('BELTS_API_BASE'))
+        self.cooling_drum_predictor_api_url_base = str('http://localhost:8080/cooling-drum-water-prediction/' if os.getenv('COOLING_DRUM_API_BASE') == None else os.getenv('COOLING_DRUM_API_BASE'))
+        self.belts_predictor_api_url_base = str('http://localhost:8090/calculate_unified_belt_addition/' if os.getenv('BELTS_API_BASE') == None else os.getenv('BELTS_API_BASE'))
 
         # Detect if i am running on docker
         self.inside_docker = False if os.getenv('AM_I_IN_A_DOCKER_CONTAINER') == None else True

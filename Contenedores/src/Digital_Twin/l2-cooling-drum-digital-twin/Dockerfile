@@ -20,8 +20,8 @@ ENV KAFKA_PREDICTION_UNIFIED_BELTS_TOPIC=water_prediction_unified_belts
 ENV KAFKA_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum 
 ENV KAFKA_MOULD_DATA_TOPIC=mould_data 
 ENV KAFKA_SENSOR_DATA_TOPIC=sensor_data 
-ENV COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/cooling-drum-water-prediction 
-ENV BELTS_API_BASE=http://belts-water-factor-predictor:80/unified_belt_prediction
+ENV COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/calculate_water_adittion_liters/
+ENV BELTS_API_BASE=http://belts-water-factor-predictor:80/calculate_unified_belt_addition/
 
 # Install dependencies
 COPY requirements.txt .

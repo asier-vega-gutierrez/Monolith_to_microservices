@@ -82,7 +82,7 @@ class WaterAdditionDigitalTwin:
             q_sand_avg = self._calculate_qsand_average()
             q_metal_avg = self._calculate_qmetal_average()
 
-            # Then, we call the rest api service
+            # Then, we call the rest api service 
             api_url = f'{self._config.cooling_drum_predictor_api_url_base}?f_avg={f_avg}&q_sand_avg={q_sand_avg}&q_metal_avg={q_metal_avg}'
             response = requests.get(api_url)
             print("COOLING DRUM Water Addition for Line {}: {}".format(self._config.line, response.text))
@@ -97,7 +97,7 @@ class WaterAdditionDigitalTwin:
             temp_avg = self._obtain_current_temperature()
             humidity = self._obtain_current_humidity()
 
-            # Then, we call the rest api service
+            # Then, we call the rest api service 
             api_url = f'{self._config.belts_predictor_api_url_base}?q_sand_average={q_sand_avg}&temp_average={temp_avg}&humidity={humidity}'
             response = requests.get(api_url)
             print("COOLING DRUM Belts Addition: {}".format(self._config.line, response.text))

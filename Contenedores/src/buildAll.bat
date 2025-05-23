@@ -18,8 +18,8 @@ docker build -t pdagent_sqlserver:0.1 ./PDAgents/PDAgent_SqlServerReader
 docker build -t digital_twin_l1:0.1 ./Digital_Twin/l1-cooling-drum-digital-twin
 docker build -t digital_twin_l2:0.1 ./Digital_Twin/l2-cooling-drum-digital-twin
 docker build -t digital_twin_tapes:0.1 ./Digital_Twin/tapes-digital-twin
-REM docker build -t pdagent_relational_storage:0.1 ./PDAgents/PDAgent_RelationDBWriter
-REM docker build -t pdagent_temporal_serie:0.1 ./PDAgents/PDAgent_TemporalSeriesWriter
+docker build -t pdagent_relational_storage:0.1 ./PDAgents/PDAgent_RelationDBWriter
+docker build -t pdagent_temporal_serie:0.1 ./PDAgents/PDAgent_TemporalSeriesWriter
 
 REM Build API Rest Images with names: cooling_drum_water_predictor:0.1 and belts_water_predictor:0.1
 docker build -t cooling_drum_water_predictor:0.1 ./Predictions/CoolingDrumWaterAddition

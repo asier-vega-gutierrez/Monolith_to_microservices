@@ -36,5 +36,7 @@ if __name__ == "__main__":
 #Para realizar llamadas desde la url
 http://localhost:8090/calculate_single_tape_addition/?q_sand_avg=10&temperature_avg=10
 
+
 http://localhost:8090/calculate_unified_belt_addition/?q_sand_average=10&temp_average=10&humidity=10
+
 '''

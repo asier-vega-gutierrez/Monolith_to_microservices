@@ -193,6 +193,66 @@ services:
       - kafka
       - zookeeper
       - sqlserver-input
+  pdagent-relational-output:
+    restart: always
+    container_name: pdagent-relational-output
+    image: pdagent_relational_storage:0.1
+    networks:
+      - cloud-network
+    environment:
+      - KAFKA_CLIENT_ID=DB-Relational-Storage-Agent 
+      - KAFKA_GROUP_ID=DB-Relational-DB-Writer 
+      - KAFKA_BROKER_IP=kafka  
+      - KAFKA_BROKER_POR=9092 
+      #
+      - KAFKA_SENSOR_DATA_TOPIC=sensor_data 
+      #
+      - KAFKA_CHEMICAL_COMPOSITION_TOPIC=chemical_composition_file 
+      - KAFKA_WATER_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum_ 
+      - KAFKA_WATER_PREDICTION_TAPES_TOPIC=water_prediction_unified_belts 
+      - KAFKA_POURING_DATA_TOPIC=pouring_mysql 
+      #
+      - KAFKA_MOULD_DATA_TOPIC=mould_data
+      #
+      - POSTGRES_IP=postgres-output 
+      - POSTGRES_PORT=5432 
+      - POSTGRES_USER=postgres 
+      - POTSGRES_PASS=MUCSI_Deusto2022 
+      - POSTGRES_DB=Foundry_Relational_Storage 
+      - AM_I_IN_A_DOCKER_CONTAINER=1
+    depends_on:
+      - kafka
+      - zookeeper
+      - l1-cooling-drum-digital-twin
+      - l2-cooling-drum-digital-twin
+      - belts-water-factor-predictor
+      - pdagent-mysql-input
+      - pdagent-file-input
+      - postgres-output
+  pdagent-temporal-serie-output:
+    restart: always
+    container_name: pdagent-temporal-serie-output
+    image: pdagent_temporal_serie:0.1
+    environment:
+      - KAFKA_CLIENT_ID=Influx-DB-Storage-Agent 
+      - KAFKA_GROUP_ID=TemporalSeries-Writer-Group 
+      - KAFKA_BROKER_IP=kafka 
+      - KAFKA_BROKER_PORT=9092 
+      - KAFKA_DRUM_WATER_PREDICTION_TOPIC=water_prediction_cooling_drum 
+      - KAFKA_BELTS_WATER_PREDICTION_TOPIC=water_prediction_unified_belts 
+      - KAFKA_SENSOR_DATA_TOPIC=sensor_data 
+      - INFLUX_TOKEN=vunCmVedzTMarNJ4y4iwTGpFU84gerPj7sDyAlwJuHpMKFyjc187bhpGsYZwDVaTnJz4nZ2esU-MZ3UlNVFRA== 
+      - INFLUX_URL=http://influxdb-output:8086 
+      - INFLUX_ORG=Deusto 
+      - INFLUX_BUCKET=cloud-bucket 
+      - AM_I_IN_A_DOCKER_CONTAINER=1
+    networks:
+      - cloud-network
+    depends_on:
+      - kafka
+      - zookeeper    
+      - influxdb-output  
+
 #   # Intelligent Services (predictions, clasificacion or regresions)
   cooling-drum-water-predictor:
     restart: always
@@ -232,8 +292,8 @@ services:
       - KAFKA_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum 
       - KAFKA_MOULD_DATA_TOPIC=mould_data 
       - KAFKA_SENSOR_DATA_TOPIC=sensor_data 
-      - COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/cooling-drum-water-prediction 
-      - BELTS_API_BASE=http://belts-water-factor-predictor:80/unified_belt_prediction 
+      - COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/calculate_water_adittion_liters/
+      - BELTS_API_BASE=http://belts-water-factor-predictor:80/calculate_unified_belt_addition/
     depends_on:
       - kafka
       - zookeeper
@@ -258,8 +318,8 @@ services:
       - KAFKA_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum 
       - KAFKA_MOULD_DATA_TOPIC=mould_data 
       - KAFKA_SENSOR_DATA_TOPIC=sensor_data 
-      - COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/cooling-drum-water-prediction 
-      - BELTS_API_BASE=http://belts-water-factor-predictor:80/unified_belt_prediction
+      - COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/calculate_water_adittion_liters/
+      - BELTS_API_BASE=http://belts-water-factor-predictor:80/calculate_unified_belt_addition/
     depends_on:
       - kafka
       - zookeeper
@@ -284,8 +344,8 @@ services:
       - KAFKA_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum 
       - KAFKA_MOULD_DATA_TOPIC=mould_data 
       - KAFKA_SENSOR_DATA_TOPIC=sensor_data 
-      - COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/cooling-drum-water-prediction 
-      - BELTS_API_BASE=http://belts-water-factor-predictor:80/unified_belt_prediction
+      - COOLING_DRUM_API_BASE=http://cooling-drum-water-predictor:80/calculate_water_adittion_liters/
+      - BELTS_API_BASE=http://belts-water-factor-predictor:80/calculate_unified_belt_addition/
     depends_on:
       - kafka
       - zookeeper
@@ -294,42 +354,5 @@ services:
       - belts-water-factor-predictor
 
 
-
-
-#   pdagent-relational-output:
-#     restart: always
-#     container_name: pdagent-relational-output
-#     build: ?
-#     image: pdagent_relational_storage:0.2
-#     networks:
-#       - cloud-network
-#     environment:
-#       ?
-#     volumes:
-#       ?
-#     depends_on:
-#       - kafka
-#       - zookeeper
-#       - l1-cooling-drum-digital-twin
-#       - l2-cooling-drum-digital-twin
-#       - belts-water-factor-predictor
-#       - pdagent-mssql-input
-#       - pdagent-file-input
-#       - postgres-output
-#   pdagent-temporal-serie-output:
-#     restart: always
-#     container_name: pdagent-temporal-serie-output
-#     build: ?
-#     image: pdagent_temporal_serie:0.2
-#     environment:
-#       ?
-#     volumes:
-#       ?
-#     networks:
-#       - cloud-network
-#     depends_on:
-#       - kafka
-#       - zookeeper    
-#       - influxdb-output  
 
 
