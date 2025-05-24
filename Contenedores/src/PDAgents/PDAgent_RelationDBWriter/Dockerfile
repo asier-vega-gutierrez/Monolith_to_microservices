@@ -10,16 +10,12 @@ ENV KAFKA_CLIENT_ID=DB-Relational-Storage-Agent
 ENV KAFKA_GROUP_ID=DB-Relational-DB-Writer 
 ENV KAFKA_BROKER_IP=kafka  
 ENV KAFKA_BROKER_POR=9092 
-#
 ENV KAFKA_SENSOR_DATA_TOPIC=sensor_data 
-#
 ENV KAFKA_CHEMICAL_COMPOSITION_TOPIC=chemical_composition_file 
-ENV KAFKA_WATER_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum_ 
+ENV KAFKA_WATER_PREDICTION_DRUM_TOPIC=water_prediction_cooling_drum
 ENV KAFKA_WATER_PREDICTION_TAPES_TOPIC=water_prediction_unified_belts 
 ENV KAFKA_POURING_DATA_TOPIC=pouring_mysql 
-#
 ENV KAFKA_MOULD_DATA_TOPIC=mould_data
-#
 ENV POSTGRES_IP=postgres-output 
 ENV POSTGRES_PORT=5432 
 ENV POSTGRES_USER=postgres 

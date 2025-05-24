@@ -44,15 +44,15 @@ class RelationalRecordingWorker:
         config = PDAgentRelationDBWriterConfiguration()
 
         # We configure the subscriptions        
-        self._data_consumer.add_subscriber(f"{config.kafka_sensor_data_topic}l1", SensorSubscriber(self.store_sensor_data))     
-        self._data_consumer.add_subscriber(f"{config.kafka_sensor_data_topic}l2", SensorSubscriber(self.store_sensor_data))        
+        self._data_consumer.add_subscriber(f"{config.kafka_sensor_data_topic}_l1", SensorSubscriber(self.store_sensor_data))     
+        self._data_consumer.add_subscriber(f"{config.kafka_sensor_data_topic}_l2", SensorSubscriber(self.store_sensor_data))        
         self._data_consumer.add_subscriber(f"{config.kafka_chemical_composition_topic}", ChemicalCompositionSubscriber(self.store_chemical_composition_data))        
-        self._data_consumer.add_subscriber(f"{config.kafka_waterprediction_drum_data_topic}l1", PredictionSubscriber(self.store_prediction))        
-        self._data_consumer.add_subscriber(f"{config.kafka_waterprediction_drum_data_topic}l2", PredictionSubscriber(self.store_prediction))        
+        self._data_consumer.add_subscriber(f"{config.kafka_waterprediction_drum_data_topic}_l1", PredictionSubscriber(self.store_prediction))        
+        self._data_consumer.add_subscriber(f"{config.kafka_waterprediction_drum_data_topic}_l2", PredictionSubscriber(self.store_prediction))        
         self._data_consumer.add_subscriber(f"{config.kafka_waterprediction_belt_data_topic}", PredictionSubscriber(self.store_prediction))        
         self._data_consumer.add_subscriber(f"{config.kafka_pouring_data_topic}", PouringSubscriber(self.manage_pouring_info))    
-        self._data_consumer.add_subscriber(f"{config.kafka_mould_data_topic}l1", MouldSubscriber(self.store_mould_data))    
-        self._data_consumer.add_subscriber(f"{config.kafka_mould_data_topic}l2", MouldSubscriber(self.store_mould_data))    
+        self._data_consumer.add_subscriber(f"{config.kafka_mould_data_topic}_l1", MouldSubscriber(self.store_mould_data))    
+        self._data_consumer.add_subscriber(f"{config.kafka_mould_data_topic}_l2", MouldSubscriber(self.store_mould_data))    
         
 
         # We launch the reading process
