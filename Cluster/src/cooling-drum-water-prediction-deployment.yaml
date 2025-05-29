@@ -28,7 +28,13 @@ spec:
           limits:
             memory: "100M"
             cpu: "100m"
-
+        livenessProbe:
+          httpGet:
+              path: /docs
+              port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
         ports:
         - containerPort: 80
 
