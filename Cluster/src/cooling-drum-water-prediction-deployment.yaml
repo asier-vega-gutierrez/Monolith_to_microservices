@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cooling-drum-water-prediction-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: cooling-drum-water-prediction
+  template:
+    metadata:
+      labels:
+        app: cooling-drum-water-prediction
+    spec:
+
+      containers:
+      - name: cooling-drum-water-prediction
+        image: localhost:5000/cooling_drum_water_predictor:0.1  # Usa el puerto de tu registry interno
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "50M"
+            cpu: "10m"
+          limits:
+            memory: "100M"
+            cpu: "100m"
+
+        ports:
+        - containerPort: 80
+

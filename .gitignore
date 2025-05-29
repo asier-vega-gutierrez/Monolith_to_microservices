@@ -1,6 +1,10 @@
 __pycache__/
 .*
 
+Cluster/k8s yaml files/
+CLuster/regitry/docker
+
+
 Contenedores/DB/Repositorios/storage/
 Contenedores/docker_tests/
 Contenedores/Kafka/
