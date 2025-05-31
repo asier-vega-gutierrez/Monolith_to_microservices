@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: belts-water-addition-factor-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: belts-water-addition-factor
+  template:
+    metadata:
+      labels:
+        app: belts-water-addition-factor
+    spec:
+
+      containers:
+      - name: belts-water-addition-factor
+        image: belts_water_predictor:0.1
+        imagePullPolicy: Never
+        resources:
+          requests:
+            memory: "25M"
+            cpu: "25m"
+          limits:
+            memory: "50M"
+            cpu: "80m"
+        livenessProbe:
+          httpGet:
+              path: /docs
+              port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 80
+      
+
+

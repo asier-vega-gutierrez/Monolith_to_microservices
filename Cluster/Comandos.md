@@ -69,3 +69,10 @@ http://localhost:5000/v2/_catalog
 # Se sube asi
 docker tag cooling_drum_water_predictor:0.1 localhost:5000/cooling_drum_water_predictor:0.1
 docker push localhost:5000/cooling_drum_water_predictor:0.1
+
+
+docker tag mysql:8.1 localhost:5000/mysql:8.1
+docker push localhost:5000/mysql:8.1
+
+
+minikube mount C:\ASIER\00-Cloud\Arquitecturas\Cluster\src\DB\generation_files\all_databases_dump.sql:/mnt/mysql-input-data

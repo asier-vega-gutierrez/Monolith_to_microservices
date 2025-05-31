@@ -3,7 +3,7 @@ __pycache__/
 
 Cluster/k8s yaml files/
 CLuster/regitry/docker
-
+CLuster/DB/Repositorios/storage/
 
 Contenedores/DB/Repositorios/storage/
 Contenedores/docker_tests/

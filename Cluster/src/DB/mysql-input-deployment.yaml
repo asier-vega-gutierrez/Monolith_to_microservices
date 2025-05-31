@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-input-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mysql-input
+  template:
+    metadata:
+      labels:
+        app: mysql-input
+    spec:
+
+      containers:
+      - name: mysql-input
+        image: mysql:8.1
+        imagePullPolicy: Never
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: MUCSI_Deusto2022
+          - name: MYSQL_DATABASE
+            value: app_db
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+          - name: mysql-init
+            mountPath: /docker-entrypoint-initdb.d/all_databases_dump.sql
+          
+      volumes:
+        - name: mysql-init
+          hostPath:
+            path: /db_files/mysql/all_databases_dump.sql 
+
+        
+      
+
+
