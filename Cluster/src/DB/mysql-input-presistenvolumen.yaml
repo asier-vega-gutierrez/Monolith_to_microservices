@@ -9,7 +9,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /mnt/mysql-input-data   # Cambia esta ruta si usas minikube mount
+    path: /db_data/mysql/
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
