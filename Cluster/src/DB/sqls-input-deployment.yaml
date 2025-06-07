@@ -44,6 +44,8 @@ spec:
             mountPath: /var/opt/mssql/log 
           - name: sqls-input-secrets
             mountPath: /var/opt/mssql/secrets 
+          - name: sqls-data
+            mountPath: /var/lib/sqls
 
       volumes:
         - name: sqls-input-data
@@ -55,6 +57,9 @@ spec:
         - name: sqls-input-secrets
           hostPath:
             path: /db_files/sqls/secrets/
+        - name: sqls-data
+          persistentVolumeClaim:
+            claimName: sqls-input-pvc
 
 # minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/sqls/:/db_files/sqls --uid=10001
 
