@@ -75,5 +75,7 @@ docker tag mysql:8.1 localhost:5000/mysql:8.1
 docker push localhost:5000/mysql:8.1
 
 
-minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/mysql:/db_files/mysql/
-minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/azure-sql-edge/:/db_files/sqls/
+minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/:/db_files
+minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/sqls/:/db_files/sqls --uid=10001
+kubectl -n cloudnamespace delete pod -l app=sqls-input
+https://www.eiximenis.dev/posts/2020-06-26-sql-server-docker-no-se-ejecuta-en-root/

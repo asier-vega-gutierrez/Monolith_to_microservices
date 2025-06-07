@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqls-input-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: sqls-input
+  template:
+    metadata:
+      labels:
+        app: sqls-input
+    spec:
+
+      containers:
+      - name: sqls-input
+        image: mcr.microsoft.com/azure-sql-edge
+        imagePullPolicy: Never
+        env:
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: SA_PASSWORD
+            value: MUCSI_Deusto2022
+          - name: MSSQL_PID
+            value: Developer
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 1433
+        volumeMounts:
+          - name: sqls-input-data
+            mountPath: /var/opt/mssql/data
+          - name: sqls-input-log
+            mountPath: /var/opt/mssql/log 
+          - name: sqls-input-secrets
+            mountPath: /var/opt/mssql/secrets 
+
+      volumes:
+        - name: sqls-input-data
+          hostPath:
+            path: /db_files/sqls/data/
+        - name: sqls-input-log
+          hostPath:
+            path: /db_files/sqls/log/
+        - name: sqls-input-secrets
+          hostPath:
+            path: /db_files/sqls/secrets/
+
+# minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/sqls/:/db_files/sqls --uid=10001
+
+        
+      
+
+
