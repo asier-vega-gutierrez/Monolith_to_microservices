@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influx-output-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: influx-output
+  template:
+    metadata:
+      labels:
+        app: influx-output
+    spec:
+
+      containers:
+      - name: influx-output
+        image: mysql:8.1
+        imagePullPolicy: Never
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: MUCSI_Deusto2022
+          - name: MYSQL_DATABASE
+            value: app_db
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+          - name: influx-init-data
+            mountPath: /var/lib/influxdb2
+          - name: influx-init-data
+            mountPath: /etc/influxdb2
+            
+      volumes:
+        - name: influx-init-data
+          hostPath:
+            path: /db_files/influx/data
+        - name: influx-init-config
+          hostPath:
+            path: /db_files/influx/config
+ 
+      
+
+

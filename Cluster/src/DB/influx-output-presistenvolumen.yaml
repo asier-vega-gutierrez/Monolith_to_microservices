@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: influx-output-pv
+  namespace: cloudnamespace
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /db_data/influx/
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influx-output-pvc
+  namespace: cloudnamespace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
