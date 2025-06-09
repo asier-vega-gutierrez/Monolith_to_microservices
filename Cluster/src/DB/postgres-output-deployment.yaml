@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-output-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: postgres-output
+  template:
+    metadata:
+      labels:
+        app: postgres-output
+    spec:
+
+      containers:
+      - name: postgres-output
+        image: postgres:15
+        imagePullPolicy: Never
+        env:
+          - name: POSTGRES_PASSWORD
+            value: MUCSI_Deusto2022
+          - name: POSTGRES_DB
+            value: Foundry_Relational_Storage
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+          - name: postgres-init-data
+            mountPath: /var/lib/postgresql/data
+          - name: mysql-data
+            mountPath: /var/lib/postgresql/data
+          
+      volumes:
+        - name: postgres-init-data
+          hostPath:
+            path: /db_files/postgres/data
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-output-pvc
+
+        
+      
+
+

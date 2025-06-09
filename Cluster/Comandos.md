@@ -25,9 +25,10 @@ kubectl -n <namespace> describe pod <nombre-pod>
 # Para borrar pods
 kubectl -n <namespace> delete pod <nombre-pod>
 # Entrar en un pod
-kubectl -n <namespace>exec -it <pod> --/bin/sh
+kubectl -n <namespace>exec -it <pod> -- /bin/sh
 # Para ver los logs de un pod
 kubectl logs <pod>
+kubectl describe pods/sqls-input-deployment-879b7c6f9-gnc8x
 # Para ver los logs de un pod de forma continua
 kubectl logs -f <pod>
 
@@ -77,5 +78,15 @@ docker push localhost:5000/mysql:8.1
 
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/:/db_files
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/sqls/:/db_files/sqls --uid=10001
+minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/:/db_files
 kubectl -n cloudnamespace delete pod -l app=sqls-input
 https://www.eiximenis.dev/posts/2020-06-26-sql-server-docker-no-se-ejecuta-en-root/
+
+
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'MUCSI_Deusto2022' -Q "BACKUP DATABASE [DB-SENSORS] TO DISK = N'/var/opt/mssql/backup/db_sensor.bak' WITH INIT"
+
+tempdb    no va
+model
+msdb
+DB-SENSORS
+DB-MOULDING
