@@ -34,7 +34,7 @@ spec:
             memory: "512Mi"
             cpu: "500m"
         ports:
-        - containerPort: 3306
+        - containerPort: 5432
         volumeMounts:
           - name: postgres-init-data
             mountPath: /var/lib/postgresql/data

@@ -34,7 +34,7 @@ spec:
             memory: "512Mi"
             cpu: "500m"
         ports:
-        - containerPort: 3306
+        - containerPort: 8086
         volumeMounts:
           - name: influx-init-data
             mountPath: /var/lib/influxdb2

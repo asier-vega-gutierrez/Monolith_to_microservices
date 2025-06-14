@@ -72,21 +72,13 @@ docker tag cooling_drum_water_predictor:0.1 localhost:5000/cooling_drum_water_pr
 docker push localhost:5000/cooling_drum_water_predictor:0.1
 
 
-docker tag mysql:8.1 localhost:5000/mysql:8.1
-docker push localhost:5000/mysql:8.1
 
 
+
+
+kubectl -n cloudnamespace delete pod -l app=sqls-input
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/:/db_files
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/sqls/:/db_files/sqls --uid=10001
-minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/:/db_files
-kubectl -n cloudnamespace delete pod -l app=sqls-input
 https://www.eiximenis.dev/posts/2020-06-26-sql-server-docker-no-se-ejecuta-en-root/
-
-
-/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'MUCSI_Deusto2022' -Q "BACKUP DATABASE [DB-SENSORS] TO DISK = N'/var/opt/mssql/backup/db_sensor.bak' WITH INIT"
-
-tempdb    no va
-model
-msdb
-DB-SENSORS
-DB-MOULDING
+minikube mount /home/asier/Monolith_to_microservices/Cluster/src/Kafka/generation_files/:/kafka
+minikube mount /home/asier/Monolith_to_microservices/Cluster/src/Kafka/generation_files/:/kafka --uid=1000

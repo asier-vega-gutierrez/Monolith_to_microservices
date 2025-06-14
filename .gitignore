@@ -3,6 +3,7 @@ __pycache__/
 
 Cluster/k8s yaml files/
 Cluster/src/DB/generation_files
+Cluster/src/Kafka/generation_files
 
 Contenedores/DB/Repositorios/Storage/
 Contenedores/docker_tests/

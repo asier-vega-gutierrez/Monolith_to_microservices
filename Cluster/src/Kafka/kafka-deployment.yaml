@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+
+      containers:
+      - name: kafka
+        image: confluentinc/cp-kafka:7.4.0
+        imagePullPolicy: Always
+        env:
+          - name: KAFKA_BROKER_ID
+            value: "1"
+          - name: KAFKA_ZOOKEEPER_CONNECT
+            value: zookeeper-service:2181
+          - name: KAFKA_LISTENERS
+            value: PLAINTEXT://0.0.0.0:9092
+          - name: KAFKA_ADVERTISED_LISTENERS
+            value: PLAINTEXT://kafka-service:9092
+          - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+            value: PLAINTEXT:PLAINTEXT
+          - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+            value: "1"
+          - name: KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS
+            value: "0"
+          - name: KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR
+            value: "1"
+          - name: KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR
+            value: "1"
+          - name: KAFKA_TRANSACTION_STATE_LOG_MIN_ISR
+            value: "1"
+          - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+            value: "1"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 9092
+          - containerPort: 29092
+          - containerPort: 29093
+          - containerPort: 2181
+        volumeMounts:
+          # - name: kafka-data
+          #   mountPath: /var/lib/kafka/data
+          - name: kafka-secrets
+            mountPath: /etc/kafka/secrets
+
+      volumes:
+        # - name: kafka-data
+        #   hostPath:
+        #     path: /kafka/kafka-storage/kafka/data/ 
+        - name: kafka-secrets
+          hostPath:
+            path: /kafka/kafka-storage/kafka/secrets/ 
+
+        
+      
+
+

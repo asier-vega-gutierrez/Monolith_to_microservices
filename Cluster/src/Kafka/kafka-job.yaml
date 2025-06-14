@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kafka-create-topics
+  namespace: cloudnamespace
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: kafka-create-topics
+          image: confluentinc/cp-kafka:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              # Wait for Kafka to be ready
+              for i in {1..30}; do
+                kafka-topics --bootstrap-server kafka-service:9092 --list && break
+                echo "Waiting for Kafka..."; sleep 5
+              done
+              # Create topics
+              kafka-topics --bootstrap-server kafka-service:9092 --create --if-not-exists --topic mould_data_l1 --partitions 1 --replication-factor 1
+              kafka-topics --bootstrap-server kafka-service:9092 --create --if-not-exists --topic mould_data_l2 --partitions 1 --replication-factor 1
+              kafka-topics --bootstrap-server kafka-service:9092 --create --if-not-exists --topic mould_for_belts --partitions 1 --replication-factor 1
+              kafka-topics --bootstrap-server kafka-service:9092 --create --if-not-exists --topic pouring_mysql --partitions 1 --replication-factor 1
+              kafka-topics --bootstrap-server kafka-service:9092 --create --if-not-exists --topic sensor_data_l1 --partitions 1 --replication-factor 1
+              kafka-topics --bootstrap-server kafka-service:9092 --create --if-not-exists --topic sensor_data_l2 --partitions 1 --replication-factor 1
+              kafka-topics --bootstrap-server kafka-service:9092 --create --if-not-exists --topic water_prediction_cooling_drum_l1 --partitions 1 --replication-factor 1
+              kafka-topics --bootstrap-server kafka-service:9092 --create --if-not-exists --topic water_prediction_cooling_drum_l2 --partitions 1 --replication-factor 1
+              kafka-topics --bootstrap-server kafka-service:9092 --create --if-not-exists --topic water_prediction_unified_belts --partitions 1 --replication-factor 1

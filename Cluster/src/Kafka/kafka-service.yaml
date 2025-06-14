@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-service
+  namespace: cloudnamespace
+
+spec:
+  selector:
+    app: kafka
+  ports:
+    - name: kafka-internal
+      port: 9092
+      targetPort: 9092
+    - name: kafka-same-host
+      port: 29092
+      targetPort: 29092
+    - name: kafka-different-host
+      port: 29093
+      targetPort: 29093
+    - name: kafka-zk
+      port: 2181
+      targetPort: 2181
