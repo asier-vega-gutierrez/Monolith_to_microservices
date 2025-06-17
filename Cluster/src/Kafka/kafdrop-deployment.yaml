@@ -32,7 +32,7 @@ spec:
             memory: "512Mi"
             cpu: "500m"
         ports:
-        - containerPort: 9092
+        - containerPort: 9000
 
         
       
