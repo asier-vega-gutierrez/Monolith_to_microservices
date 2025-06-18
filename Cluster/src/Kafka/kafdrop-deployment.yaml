@@ -23,7 +23,7 @@ spec:
         imagePullPolicy: Never
         env:
           - name: KAFKA_BROKER_CONNECT
-            value: kafka-service:9092
+            value: kafka-service:29093
         resources:
           requests:
             memory: "256Mi"

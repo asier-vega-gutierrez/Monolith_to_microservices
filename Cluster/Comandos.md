@@ -71,14 +71,15 @@ http://localhost:5000/v2/_catalog
 docker tag cooling_drum_water_predictor:0.1 localhost:5000/cooling_drum_water_predictor:0.1
 docker push localhost:5000/cooling_drum_water_predictor:0.1
 
+# yo he usado esto en linux (usar el docker de minikube)
+eval $(minikube docker-env)
+
+kubectl config set-context --current --namespace=cloudnamespace
 
 
 
 
 
-kubectl -n cloudnamespace delete pod -l app=sqls-input
-minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/:/db_files
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/sqls/:/db_files/sqls --uid=10001
-https://www.eiximenis.dev/posts/2020-06-26-sql-server-docker-no-se-ejecuta-en-root/
-minikube mount /home/asier/Monolith_to_microservices/Cluster/src/Kafka/generation_files/:/kafka
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/Kafka/generation_files/:/kafka --uid=1000
+minikube mount /home/asier/Monolith_to_microservices/Cluster/src/PDagents/generation_files/data/:/input --uid=1000
