@@ -38,7 +38,7 @@ spec:
             memory: "512Mi"
             cpu: "500m"
         ports:
-        - containerPort: 9092
+        - containerPort: 29093
         volumeMounts:
           - name: file
             mountPath: /usr/src/app/cqfile/

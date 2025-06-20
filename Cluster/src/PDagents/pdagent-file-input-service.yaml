@@ -9,5 +9,5 @@ spec:
     app: pdagent-file-input
   ports:
     - name: kafka-port
-      port: 9092         # Port exposed within the cluster
-      targetPort: 9092   # Port on the pods
+      port: 29093         # Port exposed within the cluster
+      targetPort: 29093   # Port on the pods

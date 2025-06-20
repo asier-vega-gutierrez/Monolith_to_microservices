@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdagent-sqlserver-input-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pdagent-sqlserver-input
+  template:
+    metadata:
+      labels:
+        app: pdagent-sqlserver-input
+    spec:
+
+      containers:
+      - name: pdagent-sqlserver-input
+        image: pdagent_sqlserver:0.1
+        imagePullPolicy: Never
+        env:
+          - name: KAFKA_BROKER_IP
+            value: kafka-service
+          - name: KAFKA_BROKER_PORT
+            value: '29093'
+          - name: KAFKA_MYSQL_PROCESS_TOPIC
+            value: mould_data
+          - name: KAFKA_SENSOR_DATA_TOPIC
+            value: sensor_data
+          - name: SQL_SERVER_IP
+            value: sqls-input-service
+          - name: SQL_SERVER_PORT
+            value: '1433'
+          - name: SQL_SERVER_USER
+            value: sa
+          - name: SQL_SERVER_PASS
+            value: MUCSI_Deusto2022
+          - name: SQL_SERVER_MOULD_DB
+            value: DB-MOULDING
+          - name: SQL_SERVER_SENSOR_DB
+            value: DB-SENSORS
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 29093
+        - containerPort: 1433
+        
+      
+
+
