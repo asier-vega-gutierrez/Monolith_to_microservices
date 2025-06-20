@@ -74,12 +74,19 @@ docker push localhost:5000/cooling_drum_water_predictor:0.1
 # yo he usado esto en linux (usar el docker de minikube)
 eval $(minikube docker-env)
 
+
+
 kubectl config set-context --current --namespace=cloudnamespace
-
-
-
-
 
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/sqls/:/db_files/sqls --uid=10001
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/Kafka/generation_files/:/kafka --uid=1000
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/PDagents/generation_files/data/:/input --uid=1000
+
+
+
+
+kafka-topics --bootstrap-server localhost:9092 --list
+
+kafka-topics --bootstrap-server localhost:9092 --describe --topic chemical_composition_file
+
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pdagent-temporal-series-output-service
+  namespace: cloudnamespace
+
+spec:
+  selector:
+    app: pdagent-temporal-series-output
+  ports:
+    - name: kafka-port
+      port: 29093         # Port exposed within the cluster
+      targetPort: 29093   # Port on the pods
+    - name: influx-port
+      port: 8086         # Port exposed within the cluster
+      targetPort: 8086   # Port on the pods

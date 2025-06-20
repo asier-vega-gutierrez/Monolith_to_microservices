@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdagent-temporal-series-output-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pdagent-temporal-series-output
+  template:
+    metadata:
+      labels:
+        app: pdagent-temporal-series-output
+    spec:
+
+      containers:
+      - name: pdagent-temporal-series-output
+        image: pdagent_temporal_serie:0.1
+        imagePullPolicy: Never
+        env:
+          - name: KAFKA_BROKER_IP
+            value: kafka-service
+          - name: KAFKA_BROKER_PORT
+            value: '29093'
+          - name: KAFKA_CLIENT_ID
+            value: Influx-DB-Storage-Agent 
+          - name: KAFKA_GROUP_ID
+            value: TemporalSeries-Writer-Group 
+          - name: KAFKA_SENSOR_DATA_TOPIC
+            value: sensor_data
+          - name: KAFKA_CHEMICAL_COMPOSITION_TOPIC
+            value: chemical_composition_file 
+          - name: KAFKA_WATER_PREDICTION_DRUM_TOPIC
+            value: water_prediction_cooling_drum 
+          - name: KAFKA_WATER_PREDICTION_TAPES_TOPIC
+            value: water_prediction_unified_belts 
+          - name: KAFKA_POURING_DATA_TOPIC
+            value: pouring_mysql
+          - name: KAFKA_MOULD_DATA_TOPIC
+            value: mould_data
+          - name: INFLUX_TOKEN
+            value: vunCmVedzTMarNJ4y4iwTGpFU84gerPj7sDyAlwJuHpMKFyjc187bhpGsYZwDVaTnJz4nZ2esU-MZ3UlNVFRA== 
+          - name: INFLUX_URL
+            value: http://influx-output-service:8086
+          - name: INFLUX_ORG
+            value: Deusto
+          - name: INFLUX_BUCKET
+            value: cloud-bucket
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 29093
+        - containerPort: 8086
+        
+      
+
+

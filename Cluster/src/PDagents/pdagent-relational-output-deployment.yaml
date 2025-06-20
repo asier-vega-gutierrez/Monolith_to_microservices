@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdagent-relational-output-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pdagent-relational-output
+  template:
+    metadata:
+      labels:
+        app: pdagent-relational-output
+    spec:
+
+      containers:
+      - name: pdagent-relational-output
+        image: pdagent_relational_storage:0.1
+        imagePullPolicy: Never
+        env:
+          - name: KAFKA_BROKER_IP
+            value: kafka-service
+          - name: KAFKA_BROKER_PORT
+            value: '29093'
+          - name: KAFKA_SENSOR_DATA_TOPIC
+            value: sensor_data
+          - name: KAFKA_CHEMICAL_COMPOSITION_TOPIC
+            value: chemical_composition_file 
+          - name: KAFKA_WATER_PREDICTION_DRUM_TOPIC
+            value: water_prediction_cooling_drum 
+          - name: KAFKA_WATER_PREDICTION_TAPES_TOPIC
+            value: water_prediction_unified_belts 
+          - name: KAFKA_POURING_DATA_TOPIC
+            value: pouring_mysql
+          - name: KAFKA_MOULD_DATA_TOPIC
+            value: mould_data
+          - name: POSTGRES_IP
+            value: postgres-output-service
+          - name: POSTGRES_PORT
+            value: '5432'
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POTSGRES_PASS
+            value: MUCSI_Deusto2022 
+          - name: POSTGRES_DB
+            value: Foundry_Relational_Storage 
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 29093
+        - containerPort: 5432
+        
+      
+
+

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pdagent-relational-output-service
+  namespace: cloudnamespace
+
+spec:
+  selector:
+    app: pdagent-relational-output
+  ports:
+    - name: kafka-port
+      port: 29093         # Port exposed within the cluster
+      targetPort: 29093   # Port on the pods
+    - name: postgres-port
+      port: 5432         # Port exposed within the cluster
+      targetPort: 5432   # Port on the pods
