@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: digitaltwin-l1-drum-deployment
+  namespace: cloudnamespace
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: digitaltwin-l1-drum
+  template:
+    metadata:
+      labels:
+        app: digitaltwin-l1-drum
+    spec:
+
+      containers:
+      - name: digitaltwin-l1-drum
+        image: digital_twin_l1:0.1
+        imagePullPolicy: Never
+        env:
+          - name: DT_LINE
+            value: "1"
+          - name: DT_MOULD_SIZE
+            value: '20'
+          - name: DT_MOULDS_TO_CALCULATE
+            value: '7'
+          - name: DT_TYPE
+            value: DRUM
+          - name: KAFKA_CLIENT_ID
+            value: WaterAddition-DigitalTwin-L1-cooling-drum
+          - name: KAFKA_GROUP_ID
+            value: Digital-Twin-Group-l1-cooling-drum
+          - name: KAFKA_BROKER_IP
+            value: kafka-service
+          - name: KAFKA_BROKER_PORT
+            value: '29093'
+          - name: KAFKA_MOULD_FOR_BELTS_TOPIC
+            value: mould_for_belts
+          - name: KAFKA_PREDICTION_UNIFIED_BELTS_TOPIC
+            value: water_prediction_unified_belts
+          - name: KAFKA_PREDICTION_DRUM_TOPIC
+            value: water_prediction_cooling_drum
+          - name: KAFKA_MOULD_DATA_TOPIC
+            value: mould_data
+          - name: KAFKA_SENSOR_DATA_TOPIC
+            value: sensor_data
+          - name: COOLING_DRUM_API_BASE
+            value: http://cooling-drum-water-prediction-service:80/calculate_water_adittion_liters/
+          - name: BELTS_API_BASE
+            value: http://belts-water-addition-factor-service:80/calculate_unified_belt_addition/
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 29093
+        - containerPort: 80
+        
+      
+
+

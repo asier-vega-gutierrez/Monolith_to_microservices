@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: digitaltwin-l2-drum-service
+  namespace: cloudnamespace
+
+spec:
+  selector:
+    app: digitaltwin-l2-drum
+  ports:
+    - name: kafka-port
+      port: 29093         # Port exposed within the cluster
+      targetPort: 29093   # Port on the pods
+    - name: api-port
+      port: 80         # Port exposed within the cluster
+      targetPort: 80   # Port on the pods
