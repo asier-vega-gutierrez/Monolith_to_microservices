@@ -76,7 +76,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: MUCSI_Deusto2022
       MYSQL_DATABASE: app_db
-      MYSQL_USER: root
+      #MYSQL_USER: root
       MYSQL_PASSWORD: MUCSI_Deusto2022
     ports:
       - 3306:3306

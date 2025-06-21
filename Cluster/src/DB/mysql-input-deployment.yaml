@@ -16,7 +16,6 @@ spec:
       labels:
         app: mysql-input
     spec:
-
       containers:
       - name: mysql-input
         image: mysql:8.1
@@ -36,15 +35,10 @@ spec:
         ports:
         - containerPort: 3306
         volumeMounts:
-          - name: mysql-init
-            mountPath: /docker-entrypoint-initdb.d/all_databases_dump.sql
           - name: mysql-data
             mountPath: /var/lib/mysql
           
       volumes:
-        - name: mysql-init
-          hostPath:
-            path: /db_files/mysql/all_databases_dump.sql 
         - name: mysql-data
           persistentVolumeClaim:
             claimName: mysql-input-pvc

@@ -35,6 +35,8 @@ class PDAgentMySqlConfiguration(metaclass=SingletonMeta):
         self.mysql_user = str('root' if os.getenv('MYSQL_USER') == None else os.getenv('MYSQL_USER'))
         self.mysql_pass = str('MUCSI_Deusto2022' if os.getenv('MYSQL_PASS') == None else os.getenv('MYSQL_PASS'))
         self.mysql_db = str('pouring' if os.getenv('MYSQL_DB') == None else os.getenv('MYSQL_DB'))
+
+        print(self.mysql_db)
         
         # Detect if i am running on docker
         self.inside_docker = False if os.getenv('AM_I_IN_A_DOCKER_CONTAINER') == None else True

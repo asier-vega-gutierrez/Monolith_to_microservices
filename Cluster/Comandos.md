@@ -25,7 +25,7 @@ kubectl -n <namespace> describe pod <nombre-pod>
 # Para borrar pods
 kubectl -n <namespace> delete pod <nombre-pod>
 # Entrar en un pod
-kubectl -n <namespace>exec -it <pod> -- /bin/sh
+kubectl exec -it <pod> -- /bin/sh
 # Para ver los logs de un pod
 kubectl logs <pod>
 kubectl describe pods/sqls-input-deployment-879b7c6f9-gnc8x
@@ -81,6 +81,8 @@ kubectl config set-context --current --namespace=cloudnamespace
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/sqls/:/db_files/sqls --uid=10001
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/Kafka/generation_files/:/kafka --uid=1000
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/PDagents/generation_files/data/:/input --uid=1000
+minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/mysql/:/db_files/mysql --uid=1000
+
 
 
 

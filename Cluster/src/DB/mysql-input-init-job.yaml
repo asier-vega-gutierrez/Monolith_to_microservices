@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mysql-init-job
+  namespace: cloudnamespace
+
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: mysql-init
+        image: mysql:8.1
+        command: ["bash", "-c"]
+        args:
+        - "mysql -h mysql-input-service -u root -pMUCSI_Deusto2022 < /init_db/all_databases_dump.sql"
+        volumeMounts:
+        - name: mysql-init
+          mountPath: /init_db/all_databases_dump.sql
+      volumes:
+        - name: mysql-init
+          hostPath:
+            path: /db_files/mysql/all_databases_dump.sql

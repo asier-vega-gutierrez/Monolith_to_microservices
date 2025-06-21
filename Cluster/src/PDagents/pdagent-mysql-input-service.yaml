@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pdagent-mysql-input-service
+  namespace: cloudnamespace
+
+spec:
+  selector:
+    app: pdagent-mysql-input
+  ports:
+    - name: kafka-port
+      port: 29093         # Port exposed within the cluster
+      targetPort: 29093   # Port on the pods
+    - name: mysql-port
+      port: 3306         # Port exposed within the cluster
+      targetPort: 3306   # Port on the pods
