@@ -1,0 +1,5 @@
+acr_id = "/subscriptions/16a94b55-2151-4fa9-8684-2ad3cd089429/resourceGroups/cloud_rg/providers/Microsoft.ContainerRegistry/registries/cloudregistryasier"
+acr_login_server = "cloudregistryasier.azurecr.io"
+aks_fqdn = "exampleaks1-0oerfpmc.hcp.westeurope.azmk8s.io"
+aks_id = "/subscriptions/16a94b55-2151-4fa9-8684-2ad3cd089429/resourceGroups/cloud_rg/providers/Microsoft.ContainerService/managedClusters/cloud_cluster"
+aks_node_rg = "MC_cloud_rg_cloud_cluster_westeurope"
