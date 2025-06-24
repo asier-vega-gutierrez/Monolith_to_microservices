@@ -19,8 +19,9 @@ spec:
 
       containers:
       - name: cooling-drum-water-prediction
-        image: cooling_drum_water_predictor:0.1
-        imagePullPolicy: Never
+        #image: cooling_drum_water_predictor:0.1
+        image: cloudregistryasier.azurecr.io/cooling_drum_water_predictor:0.1
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "50M"
@@ -37,4 +38,7 @@ spec:
           timeoutSeconds: 5
         ports:
         - containerPort: 80
+      
+      imagePullSecrets:
+      - name: cloudregistryasier-credentials
 

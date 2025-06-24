@@ -19,8 +19,9 @@ spec:
 
       containers:
       - name: belts-water-addition-factor
-        image: belts_water_predictor:0.1
-        imagePullPolicy: Never
+        #image: belts_water_predictor:0.1
+        image: cloudregistryasier.azurecr.io/belts_water_predictor:0.1
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "25M"
@@ -37,6 +38,9 @@ spec:
           timeoutSeconds: 5
         ports:
         - containerPort: 80
+      
+      imagePullSecrets:
+      - name: cloudregistryasier-credentials
       
 
 
