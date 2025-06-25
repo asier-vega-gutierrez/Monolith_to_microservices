@@ -6,8 +6,9 @@ Cluster/src/DB/generation_files
 Cluster/src/Kafka/generation_files
 Cluster/src/PDagents/generation_files
 Cluster/IaC/terraform/.terraform/
-Cluster/IaC/terrafrom/terraform.tfstate
-Cluster/IaC/terrafrom/terraform.tfstate.backup
+Cluster/IaC/terraform/terraform.tfstate
+Cluster/IaC/terraform/terraform.tfstate.backup
+Cluster/IaC/terraform/kubeconfig
 
 Contenedores/DB/Repositorios/Storage/
 Contenedores/docker_tests/
