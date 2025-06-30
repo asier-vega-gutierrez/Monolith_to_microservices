@@ -85,7 +85,7 @@ resource "azurerm_storage_container" "container_pdagent_file" {
 }
 
 
-# all blobs
+# all blobs ####################################### _init
 resource "azurerm_storage_blob" "blob_mysql" {
   name                   = "blob_mysql"
   storage_account_name   = azurerm_storage_account.cloud_cluster_sa.name
@@ -121,4 +121,38 @@ resource "azurerm_storage_blob" "blob_pdagent_file" {
   storage_account_name   = azurerm_storage_account.cloud_cluster_sa.name
   storage_container_name = azurerm_storage_container.container_pdagent_file.name
   type                   = "Block"
+}
+
+# all disks (for pvc of the DBs)
+resource "azurerm_managed_disk" "mysql_disk" {
+  name                 = "mysql-disk"
+  location             = azurerm_resource_group.cloud_rg.location
+  resource_group_name  = azurerm_resource_group.cloud_rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 10
+}
+resource "azurerm_managed_disk" "sqls_disk" {
+  name                 = "sqls-disk"
+  location             = azurerm_resource_group.cloud_rg.location
+  resource_group_name  = azurerm_resource_group.cloud_rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 10
+}
+resource "azurerm_managed_disk" "postgres_disk" {
+  name                 = "postgres-disk"
+  location             = azurerm_resource_group.cloud_rg.location
+  resource_group_name  = azurerm_resource_group.cloud_rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 10
+}
+resource "azurerm_managed_disk" "influx_disk" {
+  name                 = "influx-disk"
+  location             = azurerm_resource_group.cloud_rg.location
+  resource_group_name  = azurerm_resource_group.cloud_rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 10
 }

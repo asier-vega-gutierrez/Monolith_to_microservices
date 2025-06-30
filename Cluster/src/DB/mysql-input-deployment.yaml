@@ -19,7 +19,7 @@ spec:
       containers:
       - name: mysql-input
         image: mysql:8.1
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: MUCSI_Deusto2022

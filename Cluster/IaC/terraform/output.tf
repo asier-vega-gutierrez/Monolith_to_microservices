@@ -23,3 +23,19 @@ resource "local_file" "kubeconfig" {
   filename     = "kubeconfig"
   content      = azurerm_kubernetes_cluster.cloud_cluster.kube_config_raw
 }
+
+output "mysql_disk_id" {
+  value = azurerm_managed_disk.mysql_disk.id
+}
+
+output "sqls_disk_id" {
+  value = azurerm_managed_disk.sqls_disk.id
+}
+
+output "postgres_disk_id" {
+  value = azurerm_managed_disk.postgres_disk.id
+}
+
+output "influx_disk_id" {
+  value = azurerm_managed_disk.influx_disk.id
+}

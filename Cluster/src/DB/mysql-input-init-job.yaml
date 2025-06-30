@@ -3,21 +3,40 @@ kind: Job
 metadata:
   name: mysql-init-job
   namespace: cloudnamespace
-
 spec:
   template:
     spec:
       restartPolicy: OnFailure
-      containers:
-      - name: mysql-init
-        image: mysql:8.1
-        command: ["bash", "-c"]
-        args:
-        - "mysql -h mysql-input-service -u root -pMUCSI_Deusto2022 < /init_db/all_databases_dump.sql"
-        volumeMounts:
-        - name: mysql-init
-          mountPath: /init_db/all_databases_dump.sql
       volumes:
+        - name: init-db
+          emptyDir: {}
+      initContainers:
+        - name: download-data
+          image: mcr.microsoft.com/azure-cli
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              az storage blob download \
+                --account-name cloudclustersa \
+                --account-key $AZURE_STORAGE_KEY \
+                --container-name container-mysql \
+                --name all_databases_dump.sql \
+                --file /init_db/all_databases_dump.sql
+          env:
+            - name: AZURE_STORAGE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: azure-storage-key
+                  key: account-key
+          volumeMounts:
+            - name: init-db
+              mountPath: /init_db
+      containers:
         - name: mysql-init
-          hostPath:
-            path: /db_files/mysql/all_databases_dump.sql
+          image: mysql:8.1
+          command: ["bash", "-c"]
+          args:
+            - "mysql -h mysql-input-service -u root -pMUCSI_Deusto2022 < /init_db/all_databases_dump.sql"
+          volumeMounts:
+            - name: init-db
+              mountPath: /init_db
