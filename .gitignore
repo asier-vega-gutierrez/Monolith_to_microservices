@@ -9,6 +9,7 @@ Cluster/IaC/terraform/.terraform/
 Cluster/IaC/terraform/terraform.tfstate
 Cluster/IaC/terraform/terraform.tfstate.backup
 Cluster/IaC/terraform/kubeconfig
+Cluster/IaC/terraform/output.md
 
 Contenedores/DB/Repositorios/Storage/
 Contenedores/docker_tests/
