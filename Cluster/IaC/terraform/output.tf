@@ -39,3 +39,4 @@ output "postgres_disk_id" {
 output "influx_disk_id" {
   value = azurerm_managed_disk.influx_disk.id
 }
+

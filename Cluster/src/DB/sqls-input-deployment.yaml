@@ -20,7 +20,7 @@ spec:
       containers:
       - name: sqls-input
         image: mcr.microsoft.com/azure-sql-edge
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: ACCEPT_EULA
             value: "Y"
@@ -49,14 +49,14 @@ spec:
 
       volumes:
         - name: sqls-input-data
-          hostPath:
-            path: /db_files/sqls/data/
+          persistentVolumeClaim:
+            claimName: sqls-input-data-pvc
         - name: sqls-input-log
-          hostPath:
-            path: /db_files/sqls/log/
+          persistentVolumeClaim:
+            claimName: sqls-input-log-pvc
         - name: sqls-input-secrets
-          hostPath:
-            path: /db_files/sqls/secrets/
+          persistentVolumeClaim:
+            claimName: sqls-input-secrets-pvc
         - name: sqls-data
           persistentVolumeClaim:
             claimName: sqls-input-pvc

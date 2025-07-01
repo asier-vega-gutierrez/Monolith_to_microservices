@@ -8,8 +8,11 @@ spec:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: /db_data/sqls/
+  persistentVolumeReclaimPolicy: Retain
+  azureDisk:
+    kind: Managed
+    diskName: sqls-disk
+    diskURI: /subscriptions/16a94b55-2151-4fa9-8684-2ad3cd089429/resourceGroups/cloud_rg/providers/Microsoft.Compute/disks/sqls-disk
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -19,6 +22,112 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sqls-input-data-pv
+  namespace: cloudnamespace
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: azurefile-csi
+  csi:
+    driver: file.csi.azure.com
+    readOnly: false
+    volumeHandle: sqls-data
+    volumeAttributes:
+      shareName: sqls-data
+    nodeStageSecretRef:
+      name: azure-files-secret
+      namespace: cloudnamespace
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sqls-input-data-pvc
+  namespace: cloudnamespace
+spec:
+  storageClassName: azurefile-csi
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sqls-input-log-pv
+  namespace: cloudnamespace
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: azurefile-csi
+  csi:
+    driver: file.csi.azure.com
+    readOnly: false
+    volumeHandle: sqls-log
+    volumeAttributes:
+      shareName: sqls-log
+    nodeStageSecretRef:
+      name: azure-files-secret
+      namespace: cloudnamespace
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sqls-input-log-pvc
+  namespace: cloudnamespace
+spec:
+  storageClassName: azurefile-csi
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sqls-input-secrets-pv
+  namespace: cloudnamespace
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: azurefile-csi
+  csi:
+    driver: file.csi.azure.com
+    readOnly: false
+    volumeHandle: sqls-secrets
+    volumeAttributes:
+      shareName: sqls-secrets
+    nodeStageSecretRef:
+      name: azure-files-secret
+      namespace: cloudnamespace
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sqls-input-secrets-pvc
+  namespace: cloudnamespace
+spec:
+  storageClassName: azurefile-csi
+  accessModes:
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi

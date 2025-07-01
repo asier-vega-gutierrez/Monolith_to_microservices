@@ -85,35 +85,11 @@ resource "azurerm_storage_container" "container_pdagent_file" {
 }
 
 
-# all blobs ####################################### _init
+# blob for mysql and pdagent(file) (only need a files)
 resource "azurerm_storage_blob" "blob_mysql" {
   name                   = "blob_mysql"
   storage_account_name   = azurerm_storage_account.cloud_cluster_sa.name
   storage_container_name = azurerm_storage_container.container_mysql.name
-  type                   = "Block"
-}
-resource "azurerm_storage_blob" "blob_influx" {
-  name                   = "blob_influx"
-  storage_account_name   = azurerm_storage_account.cloud_cluster_sa.name
-  storage_container_name = azurerm_storage_container.container_influx.name
-  type                   = "Block"
-}
-resource "azurerm_storage_blob" "blob_postgres" {
-  name                   = "blob_postgres"
-  storage_account_name   = azurerm_storage_account.cloud_cluster_sa.name
-  storage_container_name = azurerm_storage_container.container_postgres.name
-  type                   = "Block"
-}
-resource "azurerm_storage_blob" "blob_sqls" {
-  name                   = "blob_sqls"
-  storage_account_name   = azurerm_storage_account.cloud_cluster_sa.name
-  storage_container_name = azurerm_storage_container.container_sqls.name
-  type                   = "Block"
-}
-resource "azurerm_storage_blob" "blob_zookeeper" {
-  name                   = "blob_zookeeper"
-  storage_account_name   = azurerm_storage_account.cloud_cluster_sa.name
-  storage_container_name = azurerm_storage_container.container_zookeeper.name
   type                   = "Block"
 }
 resource "azurerm_storage_blob" "blob_pdagent_file" {
@@ -121,6 +97,23 @@ resource "azurerm_storage_blob" "blob_pdagent_file" {
   storage_account_name   = azurerm_storage_account.cloud_cluster_sa.name
   storage_container_name = azurerm_storage_container.container_pdagent_file.name
   type                   = "Block"
+}
+
+# azure share files for slqs (need diretories)
+resource "azurerm_storage_share" "sqls_data" {
+  name                 = "sqls-data"
+  storage_account_id = azurerm_storage_account.cloud_cluster_sa.id
+  quota                = 10
+}
+resource "azurerm_storage_share" "sqls_log" {
+  name                 = "sqls-log"
+  storage_account_id = azurerm_storage_account.cloud_cluster_sa.id
+  quota                = 10
+}
+resource "azurerm_storage_share" "sqls_secrets" {
+  name                 = "sqls-secrets"
+  storage_account_id = azurerm_storage_account.cloud_cluster_sa.id
+  quota                = 1
 }
 
 # all disks (for pvc of the DBs)
