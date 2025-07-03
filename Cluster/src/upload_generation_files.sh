@@ -23,5 +23,7 @@ az storage file upload-batch  --source DB/generation_files/sqls/secrets --destin
     --account-name cloudclustersa \
     --account-key $1
 
-
+az storage file upload-batch  --source DB/generation_files/postgres/data --destination https://cloud_cluster_sa.file.core.windows.net/postgres-data \
+    --account-name cloudclustersa \
+    --account-key $1
     

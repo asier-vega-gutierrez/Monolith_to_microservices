@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-output-pv
+  namespace: cloudnamespace
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  azureDisk:
+    kind: Managed
+    diskName: postgres-disk
+    diskURI: /subscriptions/16a94b55-2151-4fa9-8684-2ad3cd089429/resourceGroups/cloud_rg/providers/Microsoft.Compute/disks/postgres-disk
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-output-pvc
+  namespace: cloudnamespace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-output-data-pv
+  namespace: cloudnamespace
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: azurefile-csi
+  csi:
+    driver: file.csi.azure.com
+    readOnly: false
+    volumeHandle: postgres-data
+    volumeAttributes:
+      shareName: postgres-data
+    nodeStageSecretRef:
+      name: azure-files-secret
+      namespace: cloudnamespace
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-output-data-pvc
+  namespace: cloudnamespace
+spec:
+  storageClassName: azurefile-csi
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi

@@ -116,6 +116,13 @@ resource "azurerm_storage_share" "sqls_secrets" {
   quota                = 1
 }
 
+# azure share files for postgres (need diretories)
+resource "azurerm_storage_share" "postgres_data" {
+  name                 = "postgres-data"
+  storage_account_id = azurerm_storage_account.cloud_cluster_sa.id
+  quota                = 10
+}
+
 # all disks (for pvc of the DBs)
 resource "azurerm_managed_disk" "mysql_disk" {
   name                 = "mysql-disk"

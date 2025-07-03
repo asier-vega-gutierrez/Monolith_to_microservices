@@ -16,16 +16,18 @@ spec:
       labels:
         app: postgres-output
     spec:
-
+    
       containers:
       - name: postgres-output
         image: postgres:15
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: POSTGRES_PASSWORD
             value: MUCSI_Deusto2022
           - name: POSTGRES_DB
             value: Foundry_Relational_Storage
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
         resources:
           requests:
             memory: "256Mi"
@@ -36,18 +38,18 @@ spec:
         ports:
         - containerPort: 5432
         volumeMounts:
-          - name: postgres-init-data
-            mountPath: /var/lib/postgresql/data
-          - name: mysql-data
-            mountPath: /var/lib/postgresql/data
+          - name: postgres-output-data-pvc
+            mountPath: /var/lib/postgresql/data/
+          # - name: postgres-data
+          #   mountPath: /var/lib/postgresql/data
           
       volumes:
-        - name: postgres-init-data
-          hostPath:
-            path: /db_files/postgres/data
-        - name: postgres-data
+        - name: postgres-output-data-pvc
           persistentVolumeClaim:
             claimName: postgres-output-pvc
+        # - name: postgres-data
+        #   persistentVolumeClaim:
+        #     claimName: postgres-output-pvc
 
         
       

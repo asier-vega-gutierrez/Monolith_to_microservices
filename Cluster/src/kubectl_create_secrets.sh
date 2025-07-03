@@ -3,12 +3,12 @@
 
 
 kubectl create secret generic azure-storage-key \
-  --from-literal=account-key= $1 \
+  --from-literal=account-key=$1 \
   -n cloudnamespace
 
 kubectl create secret generic azure-files-secret \
   --from-literal=azurestorageaccountname=cloudclustersa \
-  --from-literal=azurestorageaccountkey= $1 \
+  --from-literal=azurestorageaccountkey=$1 \
   -n cloudnamespace
 
 kubectl create secret docker-registry cloudregistryasier-credentials \
