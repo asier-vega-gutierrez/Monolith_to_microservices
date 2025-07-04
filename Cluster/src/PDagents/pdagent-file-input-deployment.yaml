@@ -17,10 +17,37 @@ spec:
         app: pdagent-file-input
     spec:
 
+      volumes:
+        - name: file
+          emptyDir: {}
+
+      initContainers:
+        - name: download-data
+          image: mcr.microsoft.com/azure-cli
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              az storage blob download \
+                --account-name cloudclustersa \
+                --account-key $AZURE_STORAGE_KEY \
+                --container-name container-pdagent-file \
+                --name cq.csv \
+                --file /usr/src/app/cqfile/cq.csv
+          env:
+            - name: AZURE_STORAGE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: azure-storage-key
+                  key: account-key
+          volumeMounts:
+            - name: file
+              mountPath: /usr/src/app/cqfile/
+
       containers:
       - name: pdagent-file-input
-        image: pdagent_file:0.1
-        imagePullPolicy: Never
+        #image: pdagent_file:0.1
+        image: cloudregistryasier.azurecr.io/pdagent_file:0.1
+        imagePullPolicy: Always
         env:
           - name: KAFKA_BROKER_IP
             value: kafka-service
@@ -33,20 +60,20 @@ spec:
         resources:
           requests:
             memory: "256Mi"
-            cpu: "250m"
+            cpu: "100m"
           limits:
             memory: "512Mi"
-            cpu: "500m"
+            cpu: "250m"
         ports:
         - containerPort: 29093
         volumeMounts:
           - name: file
             mountPath: /usr/src/app/cqfile/
  
-      volumes:
-        - name: file
-          hostPath:
-            path: /input/
+      # volumes:
+      #   - name: file
+      #     hostPath:
+      #       path: /input/
         
       
 

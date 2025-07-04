@@ -5,7 +5,7 @@ az storage blob upload-batch --source DB/generation_files/mysql/ --destination c
     --account-name cloudclustersa \
     --account-key $1 
 
-az storage blob upload-batch --source PDagents/generation_files/data/ --destination container_pdagent_file \
+az storage blob upload-batch --source PDagents/generation_files/data/ --destination container-pdagent-file \
     --account-name cloudclustersa \
     --account-key $1
 
