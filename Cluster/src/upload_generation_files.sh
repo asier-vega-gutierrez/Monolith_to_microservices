@@ -13,17 +13,25 @@ az storage blob upload-batch --source PDagents/generation_files/data/ --destinat
 # File shares
 az storage file upload-batch  --source DB/generation_files/sqls/data --destination https://cloud_cluster_sa.file.core.windows.net/sqls-data \
     --account-name cloudclustersa \
-    --account-key $1
+    --account-key $1 
     
 az storage file upload-batch --source DB/generation_files/sqls/log --destination https://cloud_cluster_sa.file.core.windows.net/sqls-log \
     --account-name cloudclustersa \
-    --account-key $1
+    --account-key $1 \
      
 az storage file upload-batch  --source DB/generation_files/sqls/secrets --destination https://cloud_cluster_sa.file.core.windows.net/sqls-secrets \
     --account-name cloudclustersa \
-    --account-key $1
+    --account-key $1 \
 
 az storage file upload-batch  --source DB/generation_files/postgres/data --destination https://cloud_cluster_sa.file.core.windows.net/postgres-data \
     --account-name cloudclustersa \
-    --account-key $1
-    
+    --account-key $1 \
+
+az storage file upload-batch  --source DB/generation_files/influx/data --destination https://cloud_cluster_sa.file.core.windows.net/influx-data \
+    --account-name cloudclustersa \
+    --account-key $1 \
+
+az storage file upload-batch  --source DB/generation_files/influx/config --destination https://cloud_cluster_sa.file.core.windows.net/influx-config \
+    --account-name cloudclustersa \
+    --account-key $1 \
+

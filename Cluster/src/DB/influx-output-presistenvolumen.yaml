@@ -21,4 +21,76 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: influx-output-data-pv
+  namespace: cloudnamespace
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: azurefile-csi
+  csi:
+    driver: file.csi.azure.com
+    readOnly: false
+    volumeHandle: influx-data
+    volumeAttributes:
+      shareName: influx-data
+    nodeStageSecretRef:
+      name: azure-files-secret
+      namespace: cloudnamespace
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influx-output-data-pvc
+  namespace: cloudnamespace
+spec:
+  storageClassName: azurefile-csi
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: influx-output-config-pv
+  namespace: cloudnamespace
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: azurefile-csi
+  csi:
+    driver: file.csi.azure.com
+    readOnly: false
+    volumeHandle: influx-config
+    volumeAttributes:
+      shareName: influx-config
+    nodeStageSecretRef:
+      name: azure-files-secret
+      namespace: cloudnamespace
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influx-output-config-pvc
+  namespace: cloudnamespace
+spec:
+  storageClassName: azurefile-csi
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi

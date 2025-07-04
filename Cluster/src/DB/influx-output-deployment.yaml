@@ -20,7 +20,7 @@ spec:
       containers:
       - name: influx-output
         image: mysql:8.1
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: MUCSI_Deusto2022
@@ -43,11 +43,11 @@ spec:
             
       volumes:
         - name: influx-init-data
-          hostPath:
-            path: /db_files/influx/data
+          persistentVolumeClaim:
+            claimName: influx-output-data-pvc
         - name: influx-init-config
-          hostPath:
-            path: /db_files/influx/config
+          persistentVolumeClaim:
+            claimName: influx-output-config-pvc
  
       
 

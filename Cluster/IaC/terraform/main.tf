@@ -123,7 +123,19 @@ resource "azurerm_storage_share" "postgres_data" {
   quota                = 10
 }
 
-# all disks (for pvc of the DBs)
+# azure share files for influx (need diretories)
+resource "azurerm_storage_share" "influx_data" {
+  name                 = "influx-data"
+  storage_account_id = azurerm_storage_account.cloud_cluster_sa.id
+  quota                = 10
+}
+resource "azurerm_storage_share" "influx_config" {
+  name                 = "influx-config"
+  storage_account_id = azurerm_storage_account.cloud_cluster_sa.id
+  quota                = 10
+}
+
+# all disks (for pvc of the DBs data)
 resource "azurerm_managed_disk" "mysql_disk" {
   name                 = "mysql-disk"
   location             = azurerm_resource_group.cloud_rg.location
