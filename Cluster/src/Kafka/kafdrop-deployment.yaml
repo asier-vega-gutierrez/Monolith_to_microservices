@@ -20,7 +20,7 @@ spec:
       containers:
       - name: kafdrop
         image: obsidiandynamics/kafdrop:latest  
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: KAFKA_BROKER_CONNECT
             value: kafka-service:29093

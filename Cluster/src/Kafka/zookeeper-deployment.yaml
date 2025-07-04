@@ -20,7 +20,7 @@ spec:
       containers:
       - name: zookeeper
         image: confluentinc/cp-zookeeper:latest
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: ZOOKEEPER_CLIENT_PORT
             value: "2181"
@@ -43,11 +43,11 @@ spec:
  
       volumes:
         - name: kafaka-data
-          hostPath:
-            path: /kafka/kafka-storage/zookeeper/data/ 
+          persistentVolumeClaim:
+            claimName: zookeeper-data-pvc
         - name: kafaka-logs
-          hostPath:
-            path: /kafka/kafka-storage/zookeeper/log/ 
+          persistentVolumeClaim:
+            claimName: zookeeper-log-pvc
 
         
       

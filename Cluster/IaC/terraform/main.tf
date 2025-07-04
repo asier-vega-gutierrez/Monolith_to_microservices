@@ -135,6 +135,18 @@ resource "azurerm_storage_share" "influx_config" {
   quota                = 10
 }
 
+# azure share files for zookeeper (need diretories)
+resource "azurerm_storage_share" "zookeeper_data" {
+  name                 = "zookeeper-data"
+  storage_account_id = azurerm_storage_account.cloud_cluster_sa.id
+  quota                = 10
+}
+resource "azurerm_storage_share" "zookeeper_log" {
+  name                 = "zookeeper-log"
+  storage_account_id = azurerm_storage_account.cloud_cluster_sa.id
+  quota                = 10
+}
+
 # all disks (for pvc of the DBs data)
 resource "azurerm_managed_disk" "mysql_disk" {
   name                 = "mysql-disk"
