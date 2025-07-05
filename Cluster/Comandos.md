@@ -1,6 +1,5 @@
 
 ## Namespaces
-
 # Para saber los espacios creados
 kubectl get namespaces
 # Para crear un grupo de kubernetes (en minúsculas)
@@ -15,12 +14,13 @@ kubectl delete -f <directorio> --force
 kubectl apply -f <nombre yaml>
 # Si parto de un dockerfile
 docker imagen build <ruta dokerfile> -t <nombre imagen>
+# Esto es para no tenre que escribir el namespace todo el rato
+kubectl config set-context --current --namespace=cloudnamespace
 
 ## Pods
-
 # Para ver los pods de un namespace
 kubectl -n <namespace> get pods
-# Para ver lo que hemos creado
+# Para ver lo que hemos creado y ver errores del lanzamiento
 kubectl -n <namespace> describe pod <nombre-pod>
 # Para borrar pods
 kubectl -n <namespace> delete pod <nombre-pod>
@@ -33,20 +33,12 @@ kubectl describe pods/sqls-input-deployment-879b7c6f9-gnc8x
 kubectl logs -f <pod>
 
 ## Deployments
-
 # Para ver que pasa con los nodos (PENDING)
 kubectl get events -n namespace
 
 ## Minikube
-
-# Evantamos minukube, esto levanta el cluster de kubernetes
+# Levantamos minukube, esto levanta el cluster de kubernetes
 minikube start
-
-# Forwarding de puertos
-kubectl -n cloudnamespace port-forward svc/belts-water-addition-factor-service 8080:80
-
-
-
 # Create
 minikube start -p cloudcluster
 minikube start -p cloudcluster --driver=docker
@@ -57,8 +49,10 @@ minikube node add
 # Ver profiles
 minikube profile list
 
-
-### Subir imagenes
+## Subir imagenes
+# yo he usado esto en linux (usar el docker de minikube)
+eval $(minikube docker-env)
+# pero la forma general de hacerlo es con el addon de registry
 https://minikube.sigs.k8s.io/docs/handbook/registry/
 # Se necesita el registriy de minikube
 minikube addons enable registry
@@ -70,25 +64,20 @@ http://localhost:5000/v2/_catalog
 # Se sube asi
 docker tag cooling_drum_water_predictor:0.1 localhost:5000/cooling_drum_water_predictor:0.1
 docker push localhost:5000/cooling_drum_water_predictor:0.1
-
-# yo he usado esto en linux (usar el docker de minikube)
-eval $(minikube docker-env)
-
-
-
-kubectl config set-context --current --namespace=cloudnamespace
-
+# Los mounts usados en minikube han sido
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/sqls/:/db_files/sqls --uid=10001
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/Kafka/generation_files/:/kafka --uid=1000
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/PDagents/generation_files/data/:/input --uid=1000
 minikube mount /home/asier/Monolith_to_microservices/Cluster/src/DB/generation_files/mysql/:/db_files/mysql --uid=1000
 
+## Aazure AKS
+# Una vez se genera en azure el cluster se crea un achivo kubeconfig que deve moverse para aceder al cluster
+mv kubeconfig ~/.kube/config
+# Se deven generar credenciales en kubectl para que los pod accedan a imagenes y memoria
+./kubectl_create_secrets.sh <1> <2>
+# Con el resto de scrits se puede subir la informacion necesaria y imagenes y ejecutar los servicios.
 
-
-
-
+# Cosas utiles de kafka
 kafka-topics --bootstrap-server localhost:9092 --list
-
 kafka-topics --bootstrap-server localhost:9092 --describe --topic chemical_composition_file
-
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
