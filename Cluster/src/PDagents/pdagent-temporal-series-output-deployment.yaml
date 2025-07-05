@@ -19,8 +19,9 @@ spec:
 
       containers:
       - name: pdagent-temporal-series-output
-        image: pdagent_temporal_serie:0.1
-        imagePullPolicy: Never
+        #image: pdagent_temporal_serie:0.1
+        image: cloudregistryasier.azurecr.io/pdagent_temporal_serie:0.1
+        imagePullPolicy: Always
         env:
           - name: KAFKA_BROKER_IP
             value: kafka-service

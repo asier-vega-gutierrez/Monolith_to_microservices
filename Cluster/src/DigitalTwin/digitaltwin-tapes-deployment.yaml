@@ -19,8 +19,9 @@ spec:
 
       containers:
       - name: digitaltwin-tapes
-        image: digital_twin_tapes:0.1
-        imagePullPolicy: Never
+        #image: digital_twin_tapes:0.1
+        image: cloudregistryasier.azurecr.io/digital_twin_tapes:0.1
+        imagePullPolicy: Always
         env:
           - name: DT_LINE
             value: "1"

@@ -19,8 +19,9 @@ spec:
 
       containers:
       - name: pdagent-mysql-input
-        image: pdagent_mysql:0.1
-        imagePullPolicy: Never
+        #image: pdagent_mysql:0.1
+        image: cloudregistryasier.azurecr.io/pdagent_mysql:0.1
+        imagePullPolicy: Always
         env:
           - name: KAFKA_BROKER_IP
             value: kafka-service
